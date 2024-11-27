@@ -139,78 +139,77 @@ pickSeason:
 	syscall
 
 	move $s0, $v0		# store choice
-	beq $s0, $t0, winter		# if choice == 1, jump to winter
-	beq $s0, $t1, spring		# choice == 2, spring
-	beq $s0, $t2, summer		# choice == 3, summer
-	beq $s0, $t3, autumn		# choice == 4, autumn
-
-# displays winter migration map based on animal choice
-winter:
-	beq $a3, $t0, caribouWinter	# branch to proper animal for winter migration map
-	beq $a3, $t1, turtleWinter
-	beq $a3, $t2, parrotWinter
+	
+	beq $a3, $t0, caribouMigration		# branch to proper animal's migration data
+	beq $a3, $t1, turtleMigration		
+	beq $a3, $t2, parrotMigration		
+	
+# displays Caribou migration map based on season choice
+caribouMigration:
+	beq $s0, $t0, caribouWinter	# branch to proper season for caribou migration map
+	beq $s0, $t1, caribouSpring
+	beq $s0, $t2, caribouSummer
+	beq $s0, $t3, caribouAutumn
 	
 	caribouWinter:
-	# code to print winter map for caribou
-	j seasonEnd	
-	
-	turtleWinter:
-	# code to print winter map for turtle
-	j seasonEnd	
-	
-	parrotWinter:
-	# code to print winter map for parrot
-	j seasonEnd	
-
-# displays spring migration map based on animal choice
-spring:
-	beq $a3, $t0, caribouSpring	# branch to proper animal for spring migration map
-	beq $a3, $t1, turtleSpring
-	beq $a3, $t2, parrotSpring
+	# code to print Winter map for caribou
+	j seasonEnd
 	
 	caribouSpring:
 	# code to print Spring map for caribou
-	j seasonEnd	
-	
-	turtleSpring:
-	# code to print Spring map for turtle
-	j seasonEnd	
-	
-	parrotSpring:
-	# code to print Spring map for parrot
 	j seasonEnd
-# displays summer migration map based on animal choice
-summer:
-	beq $a3, $t0, caribouSummer	# branch to proper animal for summer migration map
-	beq $a3, $t1, turtleSummer
-	beq $a3, $t2, parrotSummer
 	
 	caribouSummer:
 	# code to print Summer map for caribou
+	j seasonEnd
+	
+	caribouAutumn:
+	# code to print Autumnn map for caribou
+	j seasonEnd	
+
+# displays turtle migration map based on  season choice
+turtleMigration:
+	beq $s0, $t0, turtleWinter	# branch to proper season for turtle migration map
+	beq $s0, $t1, turtleSpring
+	beq $s0, $t2, turtleSummer
+	beq $s0, $t3, turtleAutumn
+	
+	turtleWinter:
+	# code to print Winter map for turtle
+	j seasonEnd
+	
+	turtleSpring:
+	# code to print Spring map for turtle
 	j seasonEnd
 	
 	turtleSummer:
 	# code to print Summer map for turtle
 	j seasonEnd
 	
+	turtleAutumn:
+	# code to print Autumnn map for turtle
+	j seasonEnd
+# displays parrot migration map based on season choice
+parrotMigration:
+	beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
+	beq $s0, $t1, parrotSpring
+	beq $s0, $t2, parrotSummer
+	beq $s0, $t3, parrotAutumn
+	
+	parrotWinter:
+	# code to print Winter map for parrot
+	j seasonEnd
+	
+	parrotSpring:
+	# code to print Spring map for parrot
+	j seasonEnd
+	
 	parrotSummer:
 	# code to print Summer map for parrot
 	j seasonEnd
-# displays fall migration map based on animal choice
-autumn:
-	beq $a3, $t0, caribouAutumn	# branch to proper animal for summer migration map
-	beq $a3, $t1, turtleAutumn
-	beq $a3, $t2, parrotAutumn
-	caribouAutumn:
-	# code to print Autumn map for caribou
-	j seasonEnd
-	
-	turtleAutumn:
-	# code to print Autumn map for turtle
-	j seasonEnd
 	
 	parrotAutumn:
-	# code to print Autumn map for parrot
+	# code to print Autumnn map for parrot
 seasonEnd:
 	lw $ra, 0($sp)
 	lw $fp, 4($sp)
