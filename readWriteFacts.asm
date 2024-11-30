@@ -1,6 +1,7 @@
 .data 
 
-buffer: 		.space 1000
+buffer: 		.space 2000		# buffer for file contents
+input_buffer:		.space 1000		# buffer for input contents
 
 prompt_facts: 		.asciiz "\nFacts about " 
 choose_animal: 		.asciiz "Please choose an animal to view (1- caribou, 2-turtle, 3-parrot): "
@@ -19,17 +20,13 @@ prompt_edit: 		.asciiz "\nEdit a fact about this animal? (1 - Yes / 2 - No): "
 invalid_choice:		.asciiz "Please enter a valid number"
 write_fact:		.asciiz "Please write in your fact: "
 
-
-
-
-
 .text 
 
-main:
-	li $t0, 1		# caribou 
-	li $t1, 2		# turtle
-	li $t2, 3		# parrot
-			
+main: 	
+
+	j main_loop
+	
+main_loop: 		
 # delete this later (fill in code for main)
 	li $v0, 4
 	la $a0, choose_animal
@@ -37,53 +34,70 @@ main:
 
 	li $v0, 5
 	syscall
-	
 	move $a3, $v0 
 # delete this after ^^
+
+	# users choie
+	li $t0, 1		# caribou 
+	li $t1, 2		# turtle
+	li $t2, 3		# parrot
+	li $t3, 4		# exit
+
 	beq $a3, $t0, caribou_path
 	beq $a3, $t1, turtle_path
 	beq $a3, $t2, parrot_path
+	beq $a3, $t3, exit_program 
+	
+invalid_menu_choice: 
+	li $v0, 4
+	la $a0, invalid_choice 
+	syscall 
+	j main_loop
 	
 caribou_path: 
-	la $t4, caribou_file_path
-	la $t3, caribou 
-	
+	la $t4, caribou_file_path	# t4 = file path 
+	la $t5, caribou 		# t5= animal name
 	j print_facts
 	
 turtle_path: 
 	la $t4, turtle_file_path
-	la $t3, turtle
-	
+	la $t5, turtle
 	j print_facts
 	
 parrot_path: 
 	la $t4, parrot_file_path
-	la $t3, parrot
-	
+	la $t5, parrot
 	j print_facts
+exit_program: 
+	li $v0, 10
+	syscall 
+
 
 print_facts: 
 	li $v0, 4				# prompt for text "facts about "
 	la $a0, prompt_facts
 	syscall 
 	
-	move $a0, $t3				# move animal text into a0
-	
+	# print animal name
+	move $a0, $t5				# move animal text into a0
 	li $v0, 4				# print animal text 
 	syscall 
 	
+	
+	# read & display facts
 	move $a0, $t4				# move animal file path into a0 
 	la $a1, buffer				# load buffer
 	jal read_file 				# jump and link to read_file
 	
+	# print file content
 	li $v0, 4				# read in buffer
 	la $a0, buffer
 	syscall 
 	
+	# ask if user wants to edit
 	jal edit_or_not
 	
-	li $v0, 10			# exit safely
-	syscall  
+	j main_loop
 	
 edit_or_not: 
 	li $v0, 4			# prompt to edit facts 
@@ -92,13 +106,14 @@ edit_or_not:
 
 	li $v0, 5			# yes/no
 	syscall 
+	move $t6, $v0
 	
-	li $t0, 1			# load 1
-	li $t1, 2			# load 2
-	move $t2, $v0
+	li $t0, 1			# option 1: yes
+	li $t1, 2			# option 2: no 
+
 		
-	beq $t2, $t0, yes_edit 
-	beq $t2, $t1, no_edit
+	beq $t6, $t0, yes_edit 
+	beq $t6, $t1, no_edit
 	
 invalid_edit_choice: 
 	li $v0, 4
@@ -109,120 +124,194 @@ invalid_edit_choice:
 
 
 # figure out write code
-yes_edit:
-    # Prompt the user to write the fact
-    li $v0, 4              # syscall for print_string
-    la $a0, write_fact     # address of the prompt
-    syscall
-
-    # Read the user's input
-    li $v0, 8              # syscall for read_string
-    la $a0, buffer         # address of the buffer to store input
-    li $a1, 999            # maximum number of characters
-    syscall
-
-    # Open the file in append mode
-    li $v0, 13             # syscall for open file
-    move $a0, $t4          # filename (animal file path)
-    li $a1, 9              # flags: O_WRONLY (1) | O_APPEND (8) = 9
-    li $a2, 0              # mode (not used here)
-    syscall
-    move $s3, $v0          # store file descriptor
-
-    # Calculate the length of the user's input
-    la $a0, buffer         # address of the input string
-    jal strlen             # call strlen function
-    move $t0, $v0          # length of the input string
-
-    # Write the user's input to the file
-    li $v0, 15             # syscall for write to file
-    move $a0, $s3          # file descriptor
-    la $a1, buffer         # address of the input string
-    move $a2, $t0          # length of the input string
-    syscall
-
-    # Close the file
-    li $v0, 16             # syscall for close file
-    move $a0, $s3          # file descriptor
-    syscall
-
-    # Re-read the updated file and print it
-    move $a0, $t4          # filename (animal file path)
-    la $a1, buffer         # buffer to store file content
-    jal read_file          # call read_file function
-
-    # Print the updated facts to the user
-    li $v0, 4              # syscall for print_string
-    la $a0, buffer         # address of the updated content
-    syscall
-
-    jr $ra                 # return from yes_edit
-
-# Helper function to calculate the length of a string
-strlen:
-    move $t1, $a0          # $t1 points to the start of the string
-    li $v0, 0              # initialize length to 0
-
-strlen_loop:
-    lb $t2, 0($t1)         # load byte from string
-    beq $t2, $zero, strlen_done # if null terminator, end loop
-    addi $v0, $v0, 1       # increment length
-    addi $t1, $t1, 1       # move to next character
-    j strlen_loop
-
-strlen_done:
-    	jr $ra                 # return length in $v0
+yes_edit: 
+	# check if existing file has new line - if not add new line
+	move $a0, $t4			# file name into a0
+	la $a1, buffer			# buffer to store file
+	jal read_file 			# call read_file
 	
+	#   buffer contains updated txtfile 'hello\0' with null terminator
+	
+	la $a0, buffer  
+	jal check_last_char
+	beqz $v0, add_newline
+	
+	j write_fact_label
+	
+add_newline:
+	la $a0, buffer			# address of buffer
+	jal strlen 			# get current len of buffer 'hello\0'
+	move $t7, $v0			# len to t7
+	add $t8, $a0, $t7		# t8 = buffer + len
+	li $t9, 10
+	sb $t9, 0($t8)			# store newline at teh end 'hello\n\0'
+	addi $t7, $t7, 1		# len + 1 for newline 
+
+write_fact_label: 
+	li $v0, 4			# prompt user to write fact
+	la $a0, write_fact
+	syscall 
+	
+	li $v0, 8			# syscall read string
+	la $a0, input_buffer 		# store input in buffer
+	li $a1, 999
+	syscall 
+	
+	# trim newline charachter
+	la $a0, input_buffer
+	jal trim 
+	
+	# calculate len of users input 'fun\0'
+	la $a0, input_buffer		# address of input string
+	jal strlen 
+	move $t7, $v0 			# store length of input
+	
+	# append a newline char to input 'fun\n'
+	#add $t8, $a0, $t7	# t8 = buffer + len
+	#li $t9, 10
+	#sb $t9, 0($t8)		# store newline char at the end
+	#addi $t7, $t7, 1	# increment len to include newline
+	# append trimmed input + buffer
+	
+	# append input buffer to txt file
+	li $v0, 13		# syscall to open file
+	move $a0, $t4		# filepath in a0  
+	li $a1, 9 		# flag : append
+	li $a2, 0
+	syscall 
+	move $s3, $v0 		# file descriptor
+	
+	 # write users input to file
+	 li $v0, 15			# syscall write to file
+	 move $a0, $s3			# file descriptor to a0
+	 la $a1, input_buffer		# buffer with user input 
+	 move $a2, $t7			# length of input
+	 syscall  
+	 
+	 # close file
+	 li $v0, 16
+	 move $a0, $s3
+	 syscall 
+	 
+	 # re read updated file
+	 move $a0, $t4		# filename to read
+	 la $a1, buffer		# buffer to store file content 
+	 jal read_file 		# read_file(filename,buffer)
+	 
+	 # print updated file # there is an error here when reading the buffer
+	 li $v0, 4
+	 la $a0, buffer
+	 syscall 
+	 
+	 jr $ra
 no_edit: 
 	jr $ra 
 
+# Preconditions:
+#   $a0 - Address of the file path (null-terminated string).
+#   $a1 - Address of the buffer where the file contents will be stored.
+#
+# Postconditions:
+#   The file contents are loaded into the buffer pointed to by $a1.
+#   The buffer is null-terminated at the end of the read content.
+#   If the file cannot be opened or read, appropriate system behavior will occur.
+
 read_file: 
+    # Save input values into saved registers
+    move $s0, $a0            # Save file path address from $a0 into $s0
+    move $s1, $a1            # Save buffer address from $a1 into $s1
+    
+    # Open the file
+    li $v0, 13               # Syscall 13: Open file
+    move $a0, $s0            # File path (source address) from $s0
+    li $a1, 0                # Flags: O_RDONLY (read-only mode)
+    li $a2, 0                # Mode (not used here)
+    syscall                  # Perform the system call
+    move $s3, $v0            # Store file descriptor in $s3
 
-	move $s0, $a0
-	move $s1, $a1
+    # Read file contents
+    li $v0, 14               # Syscall 14: Read file
+    move $a0, $s3            # File descriptor
+    move $a1, $s1            # Buffer address for reading file content
+    li $a2, 1999             # Maximum number of bytes to read (leaving room for null terminator)
+    syscall                  # Perform the read system call
+    move $s4, $v0            # Store the number of bytes read into $s4
+
+    # Null-terminate the buffer
+    add $s5, $s4, $s1        # Calculate the address of the null terminator: buffer start + bytes read
+    sb $zero, 0($s5)         # Store a null terminator at the calculated address
+
+    # Close the file
+    li $v0, 16               # Syscall 16: Close file
+    move $a0, $s3            # File descriptor to close
+    syscall                  # Perform the close system call
+
+    # Return to caller
+    jr $ra                   # Return to the calling function
 	
-	li $v0, 13
-	move $a0, $s0
-	li $a1, 0
-	li $a2, 0 
-	syscall 
+	
+# strlen: calculate the length of a null terminated string 
+# preconditions: 
+#	a0 - address of the string
+# postconditions: 
+# v0 - length of the string 
+
+strlen: 
+	move $t0, $a0		# pointer to string
+	li $v0, 0		# counter for length 
+	
+strlen_loop: 
+	lb $t1, 0($t0)		# load byte from string where t0 points
+	beqz $t1, strlen_done	# if null terminator, end_loop 
+	addi $v0, $v0, 1	# increment length couunter
+	addi $t0, $t0, 1	# move to next charactar
+	j strlen_loop 
+	
+strlen_done:
+	jr $ra 
 
 
-	move $s3, $v0
+
+# preconditions: a0 - address of string
+# output: modified string in buffer (newline replaced with '\0')
+trim:
+    move $t0, $a0            # Pointer to start of the string
+trim_loop:
+    lb $t1, 0($t0)           # Load current character
+    li $t2, 10               # ASCII value of newline ('\n')
+    beq $t1, $t2, trim_done  # If newline, replace with '\0'
+    beqz $t1, trim_end       # If end of string (null terminator), done
+    addi $t0, $t0, 1         # Move to next character
+    j trim_loop
+
+trim_done:
+    sb $zero, 0($t0)         # Replace newline with null terminator
+trim_end:
+    jr $ra                   # Return
 	
+# error here: 1 - check_done jr ra will leave me in a loop between check_last_char
+# 	      2 - when reading the file it shows that the buffer is empty when not true 
+# check if last char in buffer is newline
+	# input: a0 - address of buffer
+	# output: v0 - 1 if last charactar is a new line otherwise 0 
+check_last_char: 
+	la $t0, buffer			# start of the buffer
+	jal strlen			# len of string
+	move $t1, $v0			# store len in t1
+	beqz $t1, check_done		# if buffer empty, return 0
 	
-	li $v0, 14
-	move $a0, $s3
-	move $a1, $s1
-	li $a2, 999
-	syscall 
-	
-	move $s4, $v0
-	
-	add $s5, $s4, $s1 
-	sb $zero, 0 ($s5)
-	
-	li $v0, 16
-	move $a0, $s3
-	syscall 
-	
+	add $t2, $t0, $t1		# t2 = buffer = len 
+	addi $t2, $t2, -1		# move to a last char
+	lb $t3, 0($t2)			# load last char into t3
+	li $t4, 10			# ascii for '\n'
+	beq $t3, $t4, is_newline	# if newline return 1
+	li $v0, 0 			# not newline
 	jr $ra
 	
-	
-	
-	
-	
-	
-	
-			
+is_newline:
+	li $v0, 1
+	jr $ra
 
-
-	
-	
-	
-	
-	
-	
-	 
-	   
-	
+check_done:
+	li $v0, 0 			# buffer empty
+	jr $ra
