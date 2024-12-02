@@ -1,5 +1,4 @@
 .data 
-
 buffer: 		.space 2000		# buffer for file contents
 input_buffer:		.space 1000		# buffer for input contents
 result:			.space 3000		# buffer for final result to print ot txt file after editing
@@ -13,8 +12,8 @@ turtle: 		.asciiz "Turtles: \n"
 
 
 caribou_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/caribouFacts.txt"
-turtle_file_path: 	.asciiz "/Users/edenmese/Desktop/Ohlone/2024-2025/CS118_Intro to Assembly Language/Labs/team-projects-fall-2024-pie/turtleFacts.txt"
-parrot_file_path: 	.asciiz "/Users/edenmese/Desktop/Ohlone/2024-2025/CS118_Intro to Assembly Language/Labs/team-projects-fall-2024-pie/parrotFacts"
+turtle_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/turtleFacts.txt"
+parrot_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/parrotFacts.txt"
 
 
 prompt_edit: 		.asciiz "\nEdit a fact about this animal? (1 - Yes / 2 - No): "

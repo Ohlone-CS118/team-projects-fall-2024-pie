@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-Caribous, also known as Reindeers, can be found in the Arctic Tundras of North America, Russia, and Scandinavia.
-They can migrate up to 3,000 miles annually.
-Caribou are the only mammals that can see ultraviolet light.
-=======
-hello
->>>>>>> 7df05581de5175114f935d05ade5a1d8349f1a1f
+- Caribous, also known as Reindeers, can be found in the Arctic Tundras of North America, Russia, and Scandinavia.
+- They can migrate up to 3,000 miles annually.
+- Caribou are the only mammals that can see ultraviolet light.
+
+I love caribous
