@@ -11,8 +11,8 @@ parrot: 		.asciiz "Parrots: \n"
 turtle: 		.asciiz "Turtles: \n"
 
 
-caribou_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/caribouFacts.txt"
-turtle_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/turtleFacts.txt"
+caribou_file_path: 	.asciiz "caribouFacts.txt"
+turtle_file_path: 	.asciiz "team-projects-fall-2024-pie/turtleFacts.txt"
 parrot_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/parrotFacts.txt"
 
 
@@ -57,27 +57,16 @@ caribou_path:
 	la $t5, caribou 		# t5= animal name
 	j print_facts
 	
-	j main_loop
 turtle_path: 
 	la $t4, turtle_file_path
 	la $t5, turtle
 	j print_facts
 	
-	j main_loop
 parrot_path: 
 	la $t4, parrot_file_path
 	la $t5, parrot
-	j print_facts
-	
-	j main_loop
-exit_program: 
-	li $v0, 10
-	syscall 
-
 
 print_facts: 
-	subi $sp, $sp, 4
-	sw $ra, 0($sp)
 	
 	li $v0, 4				# prompt for text "facts about "
 	la $a0, prompt_facts
@@ -104,10 +93,10 @@ print_facts:
 	
 	j main_loop
 	
-	lw $ra, 0($sp)
-	addi $sp, $sp, 4
-	
-	jr $ra
+exit_program: 
+
+	li $v0, 10
+	syscall 
 	
 # appends new facts user enters to previous ones in file
 appendFact:

@@ -6,10 +6,6 @@
 	repeat:		.asciiz "\nPlease enter (1) to pick another animal or (0) to exit: "
 	seasonChoices:	.asciiz "\nPlease pick a season.\n|-----------|-----------|-----------|-----------|\n|(1) Winter |(2) Spring |(3) Summer |(4) Autumn |\n|-----------|-----------|-----------|-----------|\n"
 	seasonPrompt:	.asciiz "Enter an integer from 1-4: "
-	facts1:		.asciiz "fun fact 1 file name "
-	facts2:		.asciiz "fun fact 2 file name"
-	facts3:		.asciiz "fun fact 3 file name"
-	buffer:		.asciiz 
 
 .text
 
@@ -81,7 +77,7 @@ animal1:
 	sw $fp, 4($sp)
 	# read file based on animal option
 	# jal print caribou funfacts 
-	jal editFacts
+	jal factMain
 	# print txt file
 	
 	jal pickSeason		# prompt user to pick a seaon
@@ -98,6 +94,7 @@ animal2:
 	sw $fp, 4($sp)
 	# read file based on animal option
 	# jal print turtle fun facts
+	jal factMain
 	# print txt file
 	
 	jal pickSeason		# prompt user to pick a seaon
@@ -115,6 +112,7 @@ animal3:
 	
 	# read file based on animal option
 	# jal print parrot fun facts
+	jal factMain
 	# print txt file
 	
 	jal pickSeason		# prompt user to pick a seaon
