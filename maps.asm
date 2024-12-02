@@ -18,10 +18,6 @@ define:
 # colors
 	.eqv	water	0x00588dbe
 	.eqv	land	0x00fef3c0
-	.eqv	RED 	0x00FF0000	
-	.eqv	GREEN 	0x0000FF00	
-	.eqv	BLUE	0x000000FF
-
 .text
 
 main:
@@ -30,7 +26,7 @@ main:
 	li $v0, 10	#exit safely
 	syscall
 australia:
-	li $a0, water #store color for bakground
+	li $a2, water #store color for bakground
 	li $s1, DISPLAY
 		#set s2 = last memory address of the display
 	li $s2, WIDTH
@@ -38,8 +34,7 @@ australia:
 	mul $s2, $s2, 4		#word
 	add $s2, $s1, $s2
 	jal backgroundLoop
-	
-	#row by row land
+	#australia land
 	li $a2, land
 	
 	li $a0, 0
@@ -121,30 +116,115 @@ australia:
 	li $a0, 1608
 	li $a1, 1657
 	jal drawLine
+	
+	li $a0, 1672
+	li $a1, 1712
+	jal drawLine
+	
+	li $a0, 1739
+	li $a1, 1773
+	jal drawLine
+	
+	li $a0, 1804
+	li $a1, 1835
+	jal drawLine
+	
+	li $a0, 1871
+	li $a1, 1898
+	jal drawLine
+	
+	li $a0, 1936
+	li $a1, 1962
+	jal drawLine
+	
+	li $a0, 2000	#line 32
+	li $a1, 2021
+	jal drawLine
+	
+	li $a0, 2068
+	li $a1, 2084
+	jal drawLine
+	
+	li $a0, 2132
+	li $a1, 2148
+	jal drawLine
+	#lakes
+	li $a2, water
+	
+	li $a0, 1884
+	li $a1, 1888
+	jal drawLine
+	
+	li $a0, 1947
+	li $a1, 1952
+	jal drawLine
+	
+	li $a0, 2009
+	li $a1, 2017
+	jal drawLine
+	
+	li $a0, 2071
+	li $a1, 2082
+	jal drawLine
+	
+	li $a0, 2135
+	li $a1, 2146
+	jal drawLine
+	#tasmiania
+	li $a2, land
+	
+	li $a0, 2539
+	li $a1, 2541
+	jal drawLine
+	
+	li $a0, 2581
+	li $a1, 2583
+	jal drawLine
+	
+	li $a0, 2604
+	li $a1, 2606
+	jal drawLine
+	
+	li $a0, 2645
+	li $a1, 2647
+	jal drawLine
+	
+	li $a0, 2668
+	li $a1, 2670
+	jal drawLine
+	
+	li $a0, 2710
+	li $a1, 2711
+	jal drawLine
+	
+	li $a0, 2733
+	li $a1, 2734
+	jal drawLine
+	
+	li $a0, 2799
+	li $a1, 2800
+	jal drawLine
+	
+	li $a0, 2862
+	li $a1, 2864
+	jal drawLine
+	
+	li $a0, 2904
+	li $a1, 2906
+	jal drawLine
+	
+	li $a0, 2969
+	li $a1, 2989
+	jal drawLine
+#preconditions: a2 is color
 backgroundLoop:
-	sw $a0, 0($s1)
+	sw $a2, 0($s1)
 	addiu $s1, $s1, 4
 	ble $s1, $s2, backgroundLoop
 	
 	jr $ra
 
-#preconditions: 
-#	$a0 = x position (columns)
-#	$a1 = y position (row)
-#	$a2 = color you want to print
-#postconditions:
-drawPixel:
-	# s1 = address = DISPLAY + 4 * (x + (y * WIDTH))
-	mul $s1, $a1, WIDTH	#(y * WIDTH))
-	add $s1, $s1, $a0	# (x + (y * WIDTH))
-	mul $s1, $s1, 4		#4 * (x + (y * WIDTH))
-	sw $a2, DISPLAY($s1)
-	
-	jr $ra
-#a0: start pixel
-#a1: end pixel
-#a2: color to print
-    
+#preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
     # Calculate the starting address of the row (DISPLAY + a0 * PIXEL_SIZE)
     li   $t0, DISPLAY        # Base address of the display
@@ -155,11 +235,11 @@ drawLine:
     mul  $t2, $a1, PIXEL_SIZE  # Ending pixel * PIXEL_SIZE
     add  $t2, $t2, DISPLAY    # $t2 now holds the ending address
 
-for_loop:
-    bge  $t0, $t2, draw_done  # Exit if start >= end
+forLoop:
+    bge  $t0, $t2, drawDone  # Exit if start >= end
     sw   $a2, 0($t0)          # Store the color in memory
     addiu $t0, $t0, PIXEL_SIZE # Move to the next pixel (4 bytes forward)
-    j    for_loop             # Repeat the loop
+    j    forLoop             # Repeat the loop
 
-draw_done:
+drawDone:
     jr   $ra                  # Return from the function
