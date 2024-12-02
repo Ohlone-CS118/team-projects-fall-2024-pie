@@ -8,7 +8,7 @@
 	seasonPrompt:	.asciiz "Enter an integer from 1-4: "
 
 .text
-
+.globl main
 greet:
 	li $v0, 4		# welcome the user
 	la $a0, welcome
@@ -79,6 +79,7 @@ animal1:
 	# jal print caribou funfacts 
 	jal factMain
 	# print txt file
+	jal main   
 	
 	jal pickSeason		# prompt user to pick a seaon
 	
