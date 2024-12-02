@@ -119,6 +119,7 @@ lettersS:#first row pixel by pixel, second using stack to test leghth between ea
 	sw $t0, display($t1)
 	# try to do it using a loop now
 	jal draw_pixel
+	
 	jr $ra
 
 #preconditions: 

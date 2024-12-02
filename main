@@ -80,6 +80,8 @@ animal1:
 	sw $ra, 0($sp)
 	sw $fp, 4($sp)
 	# read file based on animal option
+	# jal print caribou funfacts 
+	jal editFacts
 	# print txt file
 	jal main   
 	
@@ -96,6 +98,7 @@ animal2:
 	sw $ra, 0($sp)
 	sw $fp, 4($sp)
 	# read file based on animal option
+	# jal print turtle fun facts
 	# print txt file
 	
 	jal pickSeason		# prompt user to pick a seaon
@@ -112,6 +115,7 @@ animal3:
 	sw $fp, 4($sp)
 	
 	# read file based on animal option
+	# jal print parrot fun facts
 	# print txt file
 	
 	jal pickSeason		# prompt user to pick a seaon
