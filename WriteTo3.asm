@@ -24,20 +24,23 @@ write_fact:		.asciiz "Please write in your fact: "
 
 .globl WriteTo3
 
-main: 	
-	j main_loop
+WriteTo3:
+	#j main_loop
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 main_loop: 		
 # delete this later (fill in code for main)
-	li $v0, 4
-	la $a0, choose_animal
-	syscall  
+	#li $v0, 4
+	#la $a0, choose_animal
+	#syscall  
 
-	li $v0, 5
-	syscall
-	move $a3, $v0 
+	#li $v0, 5
+	#syscall
+	#move $a3, $v0 
 # delete this after ^^
 
 	# users choie
+	
 	li $t0, 1		# caribou 
 	li $t1, 2		# turtle
 	li $t2, 3		# parrot
@@ -59,23 +62,19 @@ caribou_path:
 	la $t5, caribou 		# t5= animal name
 	j print_facts
 	
-	j main_loop
+	#j main_loop
 turtle_path: 
 	la $t4, turtle_file_path
 	la $t5, turtle
 	j print_facts
 	
-	j main_loop
+	#j main_loop
 parrot_path: 
 	la $t4, parrot_file_path
 	la $t5, parrot
-	j print_facts
+	#j print_facts
 	
-	j main_loop
-exit_program: 
-	li $v0, 10
-	syscall 
-
+	#j main_loop
 
 print_facts: 
 	subi $sp, $sp, 4
@@ -104,11 +103,17 @@ print_facts:
 	# ask if user wants to edit
 	jal edit_or_not
 	
-	j main_loop
+	#j main_loop
 	
+	
+	
+	#jr $ra
+	
+exit_program: 
+
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
-	
+
 	jr $ra
 	
 # appends new facts user enters to previous ones in file
