@@ -3,6 +3,10 @@ buffer: 		.space 2000		# buffer for file contents
 input_buffer:		.space 1000		# buffer for input contents
 result:			.space 3000		# buffer for final result to print ot txt file after editing
 
+caribou_file_path: 	.asciiz "GitHub/team-projects-fall-2024-pie/caribouFacts.txt"
+turtle_file_path: 	.asciiz "GitHub/team-projects-fall-2024-pie/turtleFacts.txt"
+parrot_file_path: 	.asciiz "GitHub/team-projects-fall-2024-pie/parrotFacts.txt"
+
 prompt_facts: 		.asciiz "\nFacts about " 
 choose_animal: 		.asciiz "Please choose an animal to view (1- caribou, 2- turtle, 3- parrot, 4- exit): "
 
@@ -10,15 +14,9 @@ caribou: 		.asciiz "Caribou: \n"
 parrot: 		.asciiz "Parrots: \n"
 turtle: 		.asciiz "Turtles: \n"
 
-
-caribou_file_path: 	.asciiz "caribouFacts.txt"
-turtle_file_path: 	.asciiz "team-projects-fall-2024-pie/turtleFacts.txt"
-parrot_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/parrotFacts.txt"
-
 prompt_edit: 		.asciiz "\nEdit a fact about this animal? (1 - Yes / 2 - No): "
 invalid_choice:		.asciiz "Please enter a valid number\n"
 write_fact:		.asciiz "Please write in your fact: "
-
 .text 
 
 .globl Write2

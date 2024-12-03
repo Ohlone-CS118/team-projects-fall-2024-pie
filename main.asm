@@ -72,63 +72,67 @@ loop:
 	
 # function for facts//seasons/graphics for first aniaml
 animal1:
-	subi $sp, $sp, 8
+	subi $sp, $sp, 4
 	sw $ra, 0($sp)
-	sw $fp, 4($sp)
+
 	# read file based on animal option
 	# jal print caribou funfacts 
-	jal factMain
+	jal Write2
 	# print txt file
-	jal main   
+	#jal WriteTo3   
 	
 	jal pickSeason		# prompt user to pick a seaon
 	
-	lw $ra, 0($sp)
-	lw $fp, 4($sp)
-	addi $sp, $sp, 8
+	lw $ra, 4($sp)
+	addi $sp, $sp, 4
 	jr $ra
 	
 # function for facts//seasons/graphics for second aniaml
 animal2:
-	subi $sp, $sp, 8
+	subi $sp, $sp, 4
 	sw $ra, 0($sp)
-	sw $fp, 4($sp)
 	# read file based on animal option
 	# jal print turtle fun facts
-	jal factMain
+	#jal factMain
+	jal Write2
+
 	# print txt file
-	
+	#jal WriteTo3   
 	jal pickSeason		# prompt user to pick a seaon
 	
-	lw $ra, 0($sp)
-	lw $fp, 4($sp)
-	addi $sp, $sp, 8
+	lw $ra, 4($sp)
+	addi $sp, $sp, 4
 	jr $ra
 
 # function for facts//seasons/graphics for third aniaml
 animal3:
-	subi $sp, $sp, 8
+	subi $sp, $sp, 4
 	sw $ra, 0($sp)
-	sw $fp, 4($sp)
 	
 	# read file based on animal option
+
 	# jal print parrot fun facts
-	jal factMain
+	#jal factMain
+	jal Write2
 	# print txt file
-	
+	#jal WriteTo3   
 	jal pickSeason		# prompt user to pick a seaon
 	
-	lw $ra, 0($sp)
-	lw $fp, 4($sp)
-	addi $sp, $sp, 8
+	lw $ra, 4($sp)
+	addi $sp, $sp, 4
 	jr $ra
 	
 # function that asks user for  the migration season to view
 # precondition: $a3 ocntains animal option
 pickSeason:
-	subi $sp, $sp, 8
+	subi $sp, $sp, 4
 	sw $ra, 0($sp)
-	sw $fp, 4($sp)
+	
+	# set values for user options
+	li $t0, 1
+	li $t1, 2
+	li $t2, 3
+	li $t3, 4
 	
 	li $v0, 4		# print season options for user
 	la $a0, seasonChoices
@@ -214,14 +218,7 @@ parrotMigration:
 	parrotAutumn:
 	# code to print Autumnn map for parrot
 seasonEnd:
+
 	lw $ra, 0($sp)
-	lw $fp, 4($sp)
-	addi $sp, $sp, 8
-	jr $ra
-
-
-# function to print fun facts from text file
-# user can also choose to add fun facts 
-# precondition: $a0 holds address of name of file to print
-printFile:
+	addi $sp, $sp, 4
 	jr $ra
