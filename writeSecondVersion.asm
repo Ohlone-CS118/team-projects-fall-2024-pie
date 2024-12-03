@@ -4,7 +4,7 @@ input_buffer:		.space 1000		# buffer for input contents
 result:			.space 3000		# buffer for final result to print ot txt file after editing
 
 prompt_facts: 		.asciiz "\nFacts about " 
-choose_animal: 		.asciiz "Please choose an animal to view (1- caribou, 2-turtle, 3-parrot): "
+choose_animal: 		.asciiz "Please choose an animal to view (1- caribou, 2- turtle, 3- parrot, 4- exit): "
 
 caribou: 		.asciiz "Caribou: \n"
 parrot: 		.asciiz "Parrots: \n"
@@ -15,27 +15,31 @@ caribou_file_path: 	.asciiz "caribouFacts.txt"
 turtle_file_path: 	.asciiz "team-projects-fall-2024-pie/turtleFacts.txt"
 parrot_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/parrotFacts.txt"
 
-
 prompt_edit: 		.asciiz "\nEdit a fact about this animal? (1 - Yes / 2 - No): "
-invalid_choice:		.asciiz "Please enter a valid number"
+invalid_choice:		.asciiz "Please enter a valid number\n"
 write_fact:		.asciiz "Please write in your fact: "
 
 .text 
 
-main: 	
-	j main_loop
+.globl Write2
+
+Write2:
+	#j main_loop
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 main_loop: 		
 # delete this later (fill in code for main)
-	li $v0, 4
-	la $a0, choose_animal
-	syscall  
+	#li $v0, 4
+	#la $a0, choose_animal
+	#syscall  
 
-	li $v0, 5
-	syscall
-	move $a3, $v0 
+	#li $v0, 5
+	#syscall
+	#move $a3, $v0 
 # delete this after ^^
 
 	# users choie
+	
 	li $t0, 1		# caribou 
 	li $t1, 2		# turtle
 	li $t2, 3		# parrot
@@ -57,16 +61,23 @@ caribou_path:
 	la $t5, caribou 		# t5= animal name
 	j print_facts
 	
+	#j main_loop
 turtle_path: 
 	la $t4, turtle_file_path
 	la $t5, turtle
 	j print_facts
 	
+	#j main_loop
 parrot_path: 
 	la $t4, parrot_file_path
 	la $t5, parrot
+	#j print_facts
+	
+	#j main_loop
 
 print_facts: 
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 	
 	li $v0, 4				# prompt for text "facts about "
 	la $a0, prompt_facts
@@ -91,12 +102,18 @@ print_facts:
 	# ask if user wants to edit
 	jal edit_or_not
 	
-	j main_loop
+	#j main_loop
+	
+	
+	
+	#jr $ra
 	
 exit_program: 
 
-	li $v0, 10
-	syscall 
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+
+	jr $ra
 	
 # appends new facts user enters to previous ones in file
 appendFact:

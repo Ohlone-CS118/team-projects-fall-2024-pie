@@ -9,7 +9,7 @@
 
 .text
 .globl main
-greet:
+main:
 	li $v0, 4		# welcome the user
 	la $a0, welcome
 	syscall
