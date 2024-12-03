@@ -13,7 +13,7 @@
 
 .text
 .globl main
-greet:
+main:
 	li $v0, 4		# welcome the user
 	la $a0, welcome
 	syscall
@@ -80,10 +80,8 @@ animal1:
 	sw $ra, 0($sp)
 	sw $fp, 4($sp)
 	# read file based on animal option
-	# jal print caribou funfacts 
-	jal editFacts
 	# print txt file
-	jal main   
+	jal WriteTo3   
 	
 	jal pickSeason		# prompt user to pick a seaon
 	
@@ -98,9 +96,8 @@ animal2:
 	sw $ra, 0($sp)
 	sw $fp, 4($sp)
 	# read file based on animal option
-	# jal print turtle fun facts
 	# print txt file
-	
+	jal WriteTo3   
 	jal pickSeason		# prompt user to pick a seaon
 	
 	lw $ra, 0($sp)
@@ -115,9 +112,8 @@ animal3:
 	sw $fp, 4($sp)
 	
 	# read file based on animal option
-	# jal print parrot fun facts
 	# print txt file
-	
+	jal WriteTo3   
 	jal pickSeason		# prompt user to pick a seaon
 	
 	lw $ra, 0($sp)

@@ -24,17 +24,17 @@ write_fact:		.asciiz "Please write in your fact: "
 
 .globl WriteTo3
 
-main: 	
-	j main_loop
+WriteTo3:
+	#j main_loop
 main_loop: 		
 # delete this later (fill in code for main)
-	li $v0, 4
-	la $a0, choose_animal
-	syscall  
+	#li $v0, 4
+	#la $a0, choose_animal
+	#syscall  
 
-	li $v0, 5
-	syscall
-	move $a3, $v0 
+	#li $v0, 5
+	#syscall
+	#move $a3, $v0 
 # delete this after ^^
 
 	# users choie
@@ -73,9 +73,9 @@ parrot_path:
 	
 	j main_loop
 exit_program: 
-	li $v0, 10
-	syscall 
 
+	li $v0, 10 
+	syscall 
 
 print_facts: 
 	subi $sp, $sp, 4
