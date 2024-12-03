@@ -6,6 +6,7 @@
 	repeat:		.asciiz "\nPlease enter (1) to pick another animal or (0) to exit: "
 	seasonChoices:	.asciiz "\nPlease pick a season.\n|-----------|-----------|-----------|-----------|\n|(1) Winter |(2) Spring |(3) Summer |(4) Autumn |\n|-----------|-----------|-----------|-----------|\n"
 	seasonPrompt:	.asciiz "Enter an integer from 1-4: "
+	invalid_choice:	.asciiz "Please enter a valid number\n"
 
 .text
 .globl main
@@ -66,7 +67,15 @@ loop:
 	li $v0, 5
 	syscall
 	beq $v0, $t0, mainMenu
-
+	beqz $v0, end
+	
+	li $v0, 4			# error checking
+	la $a0, invalid_choice
+	syscall 
+	
+	j loop
+	
+end:
 	li $v0, 10	# exit safely
 	syscall
 	
@@ -137,7 +146,7 @@ pickSeason:
 	li $v0, 4		# print season options for user
 	la $a0, seasonChoices
 	syscall
-	
+getSeason:
 	li $v0, 4		# prompt user to enter option for season
 	la $a0, seasonPrompt
 	syscall
@@ -149,7 +158,7 @@ pickSeason:
 	
 	beq $a3, $t0, caribouMigration		# branch to proper animal's migration data
 	beq $a3, $t1, turtleMigration		
-	beq $a3, $t2, parrotMigration		
+	beq $a3, $t2, parrotMigration	
 	
 # displays Caribou migration map based on season choice
 caribouMigration:
@@ -158,6 +167,11 @@ caribouMigration:
 	beq $s0, $t2, caribouSummer
 	beq $s0, $t3, caribouAutumn
 	
+	li $v0, 4			# error checking
+	la $a0, invalid_choice
+	syscall 
+	
+	j getSeason
 	caribouWinter:
 	# code to print Winter map for caribou
 	j seasonEnd
@@ -181,6 +195,11 @@ turtleMigration:
 	beq $s0, $t2, turtleSummer
 	beq $s0, $t3, turtleAutumn
 	
+	li $v0, 4			# error checking
+	la $a0, invalid_choice
+	syscall 
+	
+	j getSeason
 	turtleWinter:
 	# code to print Winter map for turtle
 	j seasonEnd
@@ -203,6 +222,11 @@ parrotMigration:
 	beq $s0, $t2, parrotSummer
 	beq $s0, $t3, parrotAutumn
 	
+	li $v0, 4			# error checking
+	la $a0, invalid_choice
+	syscall 
+	
+	j getSeason
 	parrotWinter:
 	# code to print Winter map for parrot
 	j seasonEnd
