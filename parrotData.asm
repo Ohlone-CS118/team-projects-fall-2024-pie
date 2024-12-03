@@ -289,7 +289,7 @@ australia:
 	li $a1, 2987
 	jal drawLine
 	
-	#lakes
+	#water cutouts
 	li $a2, water
 	
 	li $a0, 1884
