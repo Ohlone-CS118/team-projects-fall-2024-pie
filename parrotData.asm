@@ -1,3 +1,5 @@
+#this file will hold base map and migration data, have loop in here that displays each migration data on top of base map based on user choice
+#code for jumping for each animal will be outside this file
 .data
 
 # set display to:
@@ -18,13 +20,28 @@ define:
 # colors
 	.eqv	water	0x00588dbe
 	.eqv	land	0x00fef3c0
+	.eqv	winter	0x00943989
+	.eqv	spring	0x00e6948f
+	.eqv	summer	0x0094241a
+	.eqv	fall	0x00e68d3e
 .text
 
 main:
 	jal australia
+	#li $a2, fall
+	#jal parrotSF
 	
+	#jal parrotWinter
+	
+	#li $a2, spring
+	#jal parrotSF
+	
+	#jal parrotSummer
+	
+	#if user picks 
 	li $v0, 10	#exit safely
 	syscall
+
 australia:
 	li $a2, water #store color for bakground
 	li $s1, DISPLAY
@@ -314,7 +331,20 @@ australia:
 	
 	li $a0, 3438
 	li $a1, 3439
-	jal drawLine	
+	jal drawLine
+	
+	#jr $ra
+#migration data
+#parrotSF:
+	li $a2, winter
+	
+	
+	
+	jr $ra
+#parrotWinter:
+
+#Parrot Summer:
+#drawing loops	
 #preconditions: a2 is color
 backgroundLoop:
 	sw $a2, 0($s1)
