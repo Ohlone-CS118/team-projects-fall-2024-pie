@@ -125,11 +125,15 @@ appendFact:
 	la $s2, result
 copy_buffer:
 	lb $s3,	0($s0)		# load byte from buffer
-	beqz $s3, copy_input	# if null copy input
+	beqz $s3, add_line	# if null copy input
 	sb $s3, 0($s2)		# store byte into result
 	addi $s0, $s0, 1	# increment to next byte in buffer
 	addi $s2, $s2, 1	# increment to next byte in result
 	j copy_buffer
+add_line:
+	li $s6, 10		# ASCII value for new line
+	sb $s6, 0($s2)
+	addi $s2, $s2, 1	# increment by one 
 copy_input:
 	lb $s3,	0($s1)		# load byte from buffer
 	beqz $s3, end_copy	# if null copy input
