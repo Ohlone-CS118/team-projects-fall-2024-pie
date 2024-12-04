@@ -1,5 +1,4 @@
-#this file will hold base map and migration data, have loop in here that displays each migration data on top of base map based on user choice
-#code for jumping for each animal will be outside this file
+#this file will hold base map and migration data, for parrot
 .data
 
 # set display to:
