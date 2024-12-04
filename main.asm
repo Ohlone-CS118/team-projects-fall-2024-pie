@@ -6,10 +6,7 @@
 	repeat:		.asciiz "\nPlease enter (1) to pick another animal or (0) to exit: "
 	seasonChoices:	.asciiz "\nPlease pick a season.\n|-----------|-----------|-----------|-----------|\n|(1) Winter |(2) Spring |(3) Summer |(4) Autumn |\n|-----------|-----------|-----------|-----------|\n"
 	seasonPrompt:	.asciiz "Enter an integer from 1-4: "
-	facts1:		.asciiz "fun fact 1 file name "
-	facts2:		.asciiz "fun fact 2 file name"
-	facts3:		.asciiz "fun fact 3 file name"
-	buffer:		.asciiz 
+	invalid_choice:	.asciiz "Please enter a valid number\n"
 
 .text
 .globl main
@@ -70,68 +67,86 @@ loop:
 	li $v0, 5
 	syscall
 	beq $v0, $t0, mainMenu
-
+	beqz $v0, end
+	
+	li $v0, 4			# error checking
+	la $a0, invalid_choice
+	syscall 
+	
+	j loop
+	
+end:
 	li $v0, 10	# exit safely
 	syscall
 	
 # function for facts//seasons/graphics for first aniaml
 animal1:
-	subi $sp, $sp, 8
+	subi $sp, $sp, 4
 	sw $ra, 0($sp)
-	sw $fp, 4($sp)
+
 	# read file based on animal option
+	# jal print caribou funfacts 
+	jal Write2
 	# print txt file
-	jal WriteTo3   
+	#jal WriteTo3   
 	
 	jal pickSeason		# prompt user to pick a seaon
 	
-	lw $ra, 0($sp)
-	lw $fp, 4($sp)
-	addi $sp, $sp, 8
+	lw $ra, 4($sp)
+	addi $sp, $sp, 4
 	jr $ra
 	
 # function for facts//seasons/graphics for second aniaml
 animal2:
-	subi $sp, $sp, 8
+	subi $sp, $sp, 4
 	sw $ra, 0($sp)
-	sw $fp, 4($sp)
 	# read file based on animal option
+	# jal print turtle fun facts
+	#jal factMain
+	jal Write2
+
 	# print txt file
-	jal WriteTo3   
+	#jal WriteTo3   
 	jal pickSeason		# prompt user to pick a seaon
 	
-	lw $ra, 0($sp)
-	lw $fp, 4($sp)
-	addi $sp, $sp, 8
+	lw $ra, 4($sp)
+	addi $sp, $sp, 4
 	jr $ra
 
 # function for facts//seasons/graphics for third aniaml
 animal3:
-	subi $sp, $sp, 8
+	subi $sp, $sp, 4
 	sw $ra, 0($sp)
-	sw $fp, 4($sp)
 	
 	# read file based on animal option
+
+	# jal print parrot fun facts
+	#jal factMain
+	jal Write2
 	# print txt file
-	jal WriteTo3   
+	#jal WriteTo3   
 	jal pickSeason		# prompt user to pick a seaon
 	
-	lw $ra, 0($sp)
-	lw $fp, 4($sp)
-	addi $sp, $sp, 8
+	lw $ra, 4($sp)
+	addi $sp, $sp, 4
 	jr $ra
 	
 # function that asks user for  the migration season to view
 # precondition: $a3 ocntains animal option
 pickSeason:
-	subi $sp, $sp, 8
+	subi $sp, $sp, 4
 	sw $ra, 0($sp)
-	sw $fp, 4($sp)
+	
+	# set values for user options
+	li $t0, 1
+	li $t1, 2
+	li $t2, 3
+	li $t3, 4
 	
 	li $v0, 4		# print season options for user
 	la $a0, seasonChoices
 	syscall
-	
+getSeason:
 	li $v0, 4		# prompt user to enter option for season
 	la $a0, seasonPrompt
 	syscall
@@ -143,7 +158,7 @@ pickSeason:
 	
 	beq $a3, $t0, caribouMigration		# branch to proper animal's migration data
 	beq $a3, $t1, turtleMigration		
-	beq $a3, $t2, parrotMigration		
+	beq $a3, $t2, parrotMigration	
 	
 # displays Caribou migration map based on season choice
 caribouMigration:
@@ -152,6 +167,11 @@ caribouMigration:
 	beq $s0, $t2, caribouSummer
 	beq $s0, $t3, caribouAutumn
 	
+	li $v0, 4			# error checking
+	la $a0, invalid_choice
+	syscall 
+	
+	j getSeason
 	caribouWinter:
 	# code to print Winter map for caribou
 	j seasonEnd
@@ -175,6 +195,11 @@ turtleMigration:
 	beq $s0, $t2, turtleSummer
 	beq $s0, $t3, turtleAutumn
 	
+	li $v0, 4			# error checking
+	la $a0, invalid_choice
+	syscall 
+	
+	j getSeason
 	turtleWinter:
 	# code to print Winter map for turtle
 	j seasonEnd
@@ -197,6 +222,11 @@ parrotMigration:
 	beq $s0, $t2, parrotSummer
 	beq $s0, $t3, parrotAutumn
 	
+	li $v0, 4			# error checking
+	la $a0, invalid_choice
+	syscall 
+	
+	j getSeason
 	parrotWinter:
 	# code to print Winter map for parrot
 	j seasonEnd
@@ -212,14 +242,7 @@ parrotMigration:
 	parrotAutumn:
 	# code to print Autumnn map for parrot
 seasonEnd:
+
 	lw $ra, 0($sp)
-	lw $fp, 4($sp)
-	addi $sp, $sp, 8
-	jr $ra
-
-
-# function to print fun facts from text file
-# user can also choose to add fun facts 
-# precondition: $a0 holds address of name of file to print
-printFile:
+	addi $sp, $sp, 4
 	jr $ra
