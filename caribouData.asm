@@ -63,7 +63,7 @@ alaska:
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
 	
-	li $a2, water #store color for bakground
+	li $a2, land #store color for bakground
 	li $s1, DISPLAY
 		#set s2 = last memory address of the display
 	li $s2, WIDTH
@@ -71,9 +71,225 @@ alaska:
 	mul $s2, $s2, 4		#word
 	add $s2, $s1, $s2
 	jal backgroundLoop
-	#alaska land
-	li $a2, land
+	#alaska water cutouts
+	li $a2, water
 	
+	li $a0, 0
+	li $a1, 15
+	jal drawLine
+	
+	li $a0, 52
+	li $a1, 76
+	jal drawLine
+	
+	li $a0, 117
+	li $a1, 139
+	jal drawLine
+	
+	li $a0, 181
+	li $a1, 202
+	jal drawLine
+	
+	li $a0, 247
+	li $a1, 265
+	jal drawLine
+	
+	li $a0, 320
+	li $a1, 329
+	jal drawLine
+	
+	li $a0, 384
+	li $a1, 392
+	jal drawLine
+	
+	li $a0, 448
+	li $a1, 456
+	jal drawLine
+	
+	li $a0, 512
+	li $a1, 518
+	jal drawLine
+	
+	li $a0, 576
+	li $a1, 581
+	jal drawLine
+	
+	li $a0, 640
+	li $a1, 643
+	jal drawLine
+	
+	li $a0, 704
+	li $a1, 705
+	jal drawLine
+	
+	li $a0, 1088
+	li $a1, 1089
+	jal drawLine
+	
+	li $a0, 1152
+	li $a1, 1154
+	jal drawLine
+	
+	li $a0, 1216
+	li $a1, 1218
+	jal drawLine
+	
+	li $a0, 1280
+	li $a1, 1283
+	jal drawLine
+	
+	li $a0, 1344
+	li $a1, 1347
+	jal drawLine
+	
+	li $a0, 1408
+	li $a1, 1412
+	jal drawLine
+	
+	li $a0, 1472
+	li $a1, 1476
+	jal drawLine
+	
+	li $a0, 1536
+	li $a1, 1541
+	jal drawLine
+	
+	li $a0, 1600
+	li $a1, 1605
+	jal drawLine
+	
+	li $a0, 1664
+	li $a1, 1669
+	jal drawLine
+	
+	li $a0, 1728
+	li $a1, 1734
+	jal drawLine
+	
+	li $a0, 1792
+	li $a1, 1798
+	jal drawLine
+	
+	li $a0, 1856
+	li $a1, 1862
+	jal drawLine
+	
+	li $a0, 1920
+	li $a1, 1926
+	jal drawLine
+	
+	li $a0, 1984
+	li $a1, 1990
+	jal drawLine
+	
+	li $a0, 2048
+	li $a1, 2054
+	jal drawLine
+	
+	li $a0, 2112
+	li $a1, 2119
+	jal drawLine
+	
+	li $a0, 2176
+	li $a1, 2187
+	jal drawLine
+	
+	li $a0, 2240
+	li $a1, 2252
+	jal drawLine
+	
+	li $a0, 2304
+	li $a1, 2316
+	jal drawLine
+	
+	li $a0, 2368
+	li $a1, 2381
+	jal drawLine
+	
+	li $a0, 2432
+	li $a1, 2446
+	jal drawLine
+	
+	li $a0, 2496
+	li $a1, 2511
+	jal drawLine
+
+	li $a0, 2560
+	li $a1, 2576
+	jal drawLine
+	
+	li $a0, 2624
+	li $a1, 2641
+	jal drawLine
+	
+	li $a0, 2688
+	li $a1, 2695
+	jal drawLine
+	
+	li $a0, 2699
+	li $a1, 2705
+	jal drawLine
+	
+	li $a0, 2752
+	li $a1, 2756
+	jal drawLine
+	
+	li $a0, 2763
+	li $a1, 2769
+	jal drawLine
+	
+	li $a0, 2816
+	li $a1, 2817
+	jal drawLine
+	
+	li $a0, 2827
+	li $a1, 2831
+	jal drawLine
+	
+	li $a0, 3264
+	li $a1, 3265
+	jal drawLine
+	
+	li $a0, 3328
+	li $a1, 3331
+	jal drawLine
+	
+	li $a0, 3392
+	li $a1, 3396
+	jal drawLine
+	
+	li $a0, 3456
+	li $a1, 3461
+	jal drawLine
+	
+	li $a0, 3472
+	li $a1, 3474
+	jal drawLine
+	
+	li $a0, 3520
+	li $a1, 3525
+	jal drawLine
+	
+	li $a0, 3535
+	li $a1, 3539
+	jal drawLine
+	
+	li $a0, 3584
+	li $a1, 3590
+	jal drawLine
+	
+	li $a0, 3598
+	li $a1, 3603
+	jal drawLine
+	#line left
+	li $a0, 3648
+	li $a1, 3396
+	jal drawLine
+	#midd line
+	li $a0, 3392
+	li $a1, 3396
+	jal drawLine
+
 
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
