@@ -22,21 +22,9 @@ write_fact:		.asciiz "Please write in your fact: "
 .globl Write2
 
 Write2:
-	#j main_loop
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
 main_loop: 		
-# delete this later (fill in code for main)
-	#li $v0, 4
-	#la $a0, choose_animal
-	#syscall  
-
-	#li $v0, 5
-	#syscall
-	#move $a3, $v0 
-# delete this after ^^
-
-	# users choie
 	
 	li $t0, 1		# caribou 
 	li $t1, 2		# turtle
@@ -59,24 +47,16 @@ caribou_path:
 	la $t5, caribou 		# t5= animal name
 	j print_facts
 	
-	#j main_loop
 turtle_path: 
 	la $t4, turtle_file_path
 	la $t5, turtle
 	j print_facts
 	
-	#j main_loop
 parrot_path: 
 	la $t4, parrot_file_path
 	la $t5, parrot
-	#j print_facts
-	
-	#j main_loop
 
 print_facts: 
-	subi $sp, $sp, 4
-	sw $ra, 0($sp)
-	
 	li $v0, 4				# prompt for text "facts about "
 	la $a0, prompt_facts
 	syscall 
@@ -99,12 +79,6 @@ print_facts:
 	
 	# ask if user wants to edit
 	jal edit_or_not
-	
-	#j main_loop
-	
-	
-	
-	#jr $ra
 	
 exit_program: 
 
