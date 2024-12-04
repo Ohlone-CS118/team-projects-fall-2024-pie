@@ -1,4 +1,10 @@
 .text
+.globl soundsCaribou
+
+soundsCaribou: 
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+
 # Instrument and volume setup
 li $a2, 10       # instrument
 li $a3, 60       # medium volume 
@@ -143,22 +149,11 @@ li $a3, 60       # medium volume
     li $v0, 33
     syscall
     
-    
-	
-    
-    
-    # repeat if we want 
-    
-    
-    
-    
-    
-    
-  
+  	lw $ra, 0($sp)
+	addi $sp, $sp, 4
 
-
-
+	jr $ra
 
 # Exit program 
-li $v0, 10
-syscall 
+#li $v0, 10
+#syscall 
