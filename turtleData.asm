@@ -275,6 +275,39 @@ atlantic:
 	li $a1, 2884
 	jal drawLine
 	
+	#cuba
+	li $a0, 3520
+	li $a1, 3524
+	jal drawLine
+	
+	li $a0, 3584
+	li $a1, 3590
+	jal drawLine
+	
+	li $a0, 3648
+	li $a1, 3656
+	jal drawLine
+	
+	li $a0, 3712
+	li $a1, 3723
+	jal drawLine
+	
+	li $a0, 3781
+	li $a1, 3788
+	jal drawLine
+	
+	li $a0, 3847
+	li $a1, 3854
+	jal drawLine
+	
+	li $a0, 3915
+	li $a1, 3919
+	jal drawLine
+	
+	li $a0, 3980
+	li $a1, 3984
+	jal drawLine
+	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
 	jr $ra
