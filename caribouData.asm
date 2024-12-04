@@ -21,6 +21,9 @@ define:
 	.eqv	water	0x00588dbe
 	.eqv	land	0x00fef3c0
 	.eqv	winter	0x00943989
+	.eqv	spring	0x00e6948f
+	.eqv	summer	0x0094241a
+	.eqv	fall	0x00e68d3e
 .text
 
 main:
