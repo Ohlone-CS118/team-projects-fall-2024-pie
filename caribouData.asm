@@ -24,7 +24,7 @@ define:
 	.eqv	summer	0x0094241a
 	.eqv	fall	0x00e68d3e
 .text
-.globl printParrot
+.globl printCaribou
 
 printCaribou:
 	subi $sp, $sp, 4
@@ -46,7 +46,7 @@ printCaribou:
 	jal caribouS
 	j caribouEnd
 	
-	parrotSummer:
+	caribouSummer:
 	li $a2, summer
 	jal caribouWS
 	j caribouEnd
