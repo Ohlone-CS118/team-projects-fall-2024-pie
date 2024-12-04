@@ -37,7 +37,7 @@ printParrot:
 	#li $a2, spring
 	#jal parrotSF
 	
-	#jal parrotSummer
+	jal parrotSummer
 	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
