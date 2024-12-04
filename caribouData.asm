@@ -26,7 +26,7 @@ define:
 	.eqv	fall	0x00e68d3e
 .text
 
-main:
+printCaribou:
 	jal alaska
 	#li $a2, winter
 	#jal caribuWS
