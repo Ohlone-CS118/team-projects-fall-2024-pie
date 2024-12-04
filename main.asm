@@ -86,9 +86,9 @@ animal1:
 
 	# read file based on animal option
 	# jal print caribou funfacts 
-	#move $s5, $a3
-	#jal soundsCaribou
-	#move $a3,$s5
+	move $s5, $a3
+	jal soundsCaribou
+	move $a3,$s5
 	jal Write2
 	# print txt file
 	#jal WriteTo3   
@@ -106,9 +106,6 @@ animal2:
 	# read file based on animal option
 	# jal print turtle fun facts
 	#jal factMain
-	move $s5, $a3
-	jal soundsParrot
-	move $a3,$s5
 	jal Write2
 
 	# print txt file
@@ -128,6 +125,9 @@ animal3:
 
 	# jal print parrot fun facts
 	#jal factMain
+	move $s5, $a3
+	jal soundsParrot
+	move $a3,$s5
 	jal Write2
 	# print txt file
 	#jal WriteTo3   
@@ -223,10 +223,12 @@ turtleMigration:
 	j seasonEnd
 # displays parrot migration map based on season choice
 parrotMigration:
-	beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
-	beq $s0, $t1, parrotSpring
-	beq $s0, $t2, parrotSummer
-	beq $s0, $t3, parrotAutumn
+	
+	jal printParrot
+	#beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
+	#beq $s0, $t1, parrotSpring
+	#beq $s0, $t2, parrotSummer
+	#beq $s0, $t3, parrotAutumn
 	
 	li $v0, 4			# error checking
 	la $a0, invalid_choice
