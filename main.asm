@@ -20,6 +20,7 @@ main:
 	syscall
 	
 	move $fp, $sp		# set up stack
+	
 mainMenu:
 	# set values for user options
 	li $t0, 1
@@ -47,6 +48,7 @@ mainMenu:
 	beq $a3, $t0, option1
 	beq $a3, $t1, option2
 	beq $a3, $t2, option3
+
 # user selected animal 1
 option1:
 	jal animal1
@@ -58,7 +60,8 @@ option2:
 # user selected animal 3
 option3:
 	jal animal3
-loop:
+loop:	
+	
 	# prompt user to choose another animal or exit
 	li $v0, 4
 	la $a0, repeat
@@ -66,6 +69,8 @@ loop:
 	# repeat if choice == 1
 	li $v0, 5
 	syscall
+	
+	li $t0, 1
 	beq $v0, $t0, mainMenu
 	beqz $v0, end
 	
@@ -106,9 +111,9 @@ animal2:
 	# read file based on animal option
 	# jal print turtle fun facts
 	#jal factMain
-	move $s5, $a3
-	jal soundsParrot
-	move $a3,$s5
+	#move $s5, $a3
+	#jal soundsParrot
+	#move $a3,$s5
 	jal Write2
 
 	# print txt file
@@ -125,7 +130,6 @@ animal3:
 	sw $ra, 0($sp)
 	
 	# read file based on animal option
-
 	# jal print parrot fun facts
 	#jal factMain
 	jal Write2
@@ -223,29 +227,32 @@ turtleMigration:
 	j seasonEnd
 # displays parrot migration map based on season choice
 parrotMigration:
-	beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
-	beq $s0, $t1, parrotSpring
-	beq $s0, $t2, parrotSummer
-	beq $s0, $t3, parrotAutumn
+
+	#jal printParrot
 	
-	li $v0, 4			# error checking
-	la $a0, invalid_choice
-	syscall 
+	#beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
+	#beq $s0, $t1, parrotSpring
+	#*beq $s0, $t2, parrotSummer
+	#beq $s0, $t3, parrotAutumn
 	
-	j getSeason
-	parrotWinter:
+	#li $v0, 4			# error checking
+	#la $a0, invalid_choice
+	#syscall 
+	
+	#j getSeason
+	#parrotWinter:
 	# code to print Winter map for parrot
-	j seasonEnd
+	#j seasonEnd
 	
-	parrotSpring:
+	#parrotSpring:
 	# code to print Spring map for parrot
-	j seasonEnd
+	#j seasonEnd
 	
-	parrotSummer:
+	#parrotSummer:
 	# code to print Summer map for parrot
-	j seasonEnd
+	#j seasonEnd
 	
-	parrotAutumn:
+	#parrotAutumn:
 	# code to print Autumnn map for parrot
 seasonEnd:
 
