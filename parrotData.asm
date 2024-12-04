@@ -649,4 +649,4 @@ forLoop:
 
 drawDone:
 	
-	jr   $ra                  # Return from the function
+	jr`$ra                  # Return from the function
