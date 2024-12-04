@@ -3,9 +3,9 @@ buffer: 		.space 2000		# buffer for file contents
 input_buffer:		.space 1000		# buffer for input contents
 result:			.space 3000		# buffer for final result to print ot txt file after editing
 
-caribou_file_path: 	.asciiz "GitHub/team-projects-fall-2024-pie/caribouFacts.txt"
-turtle_file_path: 	.asciiz "GitHub/team-projects-fall-2024-pie/turtleFacts.txt"
-parrot_file_path: 	.asciiz "GitHub/team-projects-fall-2024-pie/parrotFacts.txt"
+caribou_file_path: 	.asciiz "/Users/edenmese/Desktop/Ohlone/2024-2025/CS118_Intro to Assembly Language/Labs/team-projects-fall-2024-pie/caribouFacts.txt"
+turtle_file_path: 	.asciiz "/Users/edenmese/Desktop/Ohlone/2024-2025/CS118_Intro to Assembly Language/Labs/team-projects-fall-2024-pie/turtleFacts.txt"
+parrot_file_path: 	.asciiz "/Users/edenmese/Desktop/Ohlone/2024-2025/CS118_Intro to Assembly Language/Labs/team-projects-fall-2024-pie/parrotFacts.txt"
 
 prompt_facts: 		.asciiz "\nFacts about " 
 choose_animal: 		.asciiz "Please choose an animal to view (1- caribou, 2- turtle, 3- parrot, 4- exit): "
