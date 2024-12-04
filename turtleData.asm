@@ -26,7 +26,7 @@ define:
 	.eqv	fall	0x00e68d3e
 .text
 
-main:
+printTurtle:
 	jal atlantic
 	#jal turtleWinter
 	

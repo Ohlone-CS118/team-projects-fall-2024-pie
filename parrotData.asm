@@ -26,7 +26,7 @@ define:
 	.eqv	fall	0x00e68d3e
 .text
 
-main:
+printParrot:
 	jal australia
 	#li $a2, fall
 	#jal parrotSF
