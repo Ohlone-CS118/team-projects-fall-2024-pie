@@ -281,15 +281,38 @@ alaska:
 	li $a0, 3598
 	li $a1, 3603
 	jal drawLine
-	#line left
+	
 	li $a0, 3648
-	li $a1, 3396
+	li $a1, 3655
 	jal drawLine
-	#midd line
-	li $a0, 3392
-	li $a1, 3396
+	
+	li $a0, 3660
+	li $a1, 3668
 	jal drawLine
-
+	
+	li $a0, 3712
+	li $a1, 3732
+	jal drawLine
+	
+	li $a0, 3776
+	li $a1, 3796
+	jal drawLine
+	
+	li $a0, 3840
+	li $a1, 3859
+	jal drawLine
+	
+	li $a0, 3904
+	li $a1, 3923
+	jal drawLine
+	
+	li $a0, 3968
+	li $a1, 3986
+	jal drawLine
+	
+	li $a0, 4032
+	li $a1, 4048
+	jal drawLine
 
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
@@ -478,8 +501,119 @@ caribouWS: #migration data for winter and summer
 	jr $ra
 	
 caribouS: #data for spring
-
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
+	li $a2, spring
+	
+	li $a0, 212
+	li $a1, 222
+	jal drawLine
+	
+	li $a0, 276
+	li $a1, 286
+	jal drawLine
+	
+	li $a0, 340
+	li $a1, 350
+	jal drawLine
+	
+	li $a0, 404
+	li $a1, 414
+	jal drawLine
+	
+	li $a0, 468
+	li $a1, 478
+	jal drawLine
+	
+	li $a0, 532
+	li $a1, 542
+	jal drawLine
+	
+	li $a0, 596
+	li $a1, 606
+	jal drawLine
+	
+	li $a0, 660
+	li $a1, 670
+	jal drawLine
+	
+	li $a0, 724
+	li $a1, 734
+	jal drawLine
+	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	jr $ra	
 caribouF: #data for fall
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
+	li $a2, fall
+	
+	li $a0, 3014
+	li $a1, 3036
+	jal drawLine
+	
+	li $a0, 3078
+	li $a1, 3100
+	jal drawLine
+	
+	li $a0, 3142
+	li $a1, 3164
+	jal drawLine
+	
+	li $a0, 3206
+	li $a1, 3228
+	jal drawLine
+	
+	li $a0, 3270
+	li $a1, 3292
+	jal drawLine
+	
+	li $a0, 3334
+	li $a1, 3356
+	jal drawLine
+	
+	li $a0, 3398
+	li $a1, 3420
+	jal drawLine
+	
+	li $a0, 3480
+	li $a1, 3496
+	jal drawLine
+	
+	li $a0, 3544
+	li $a1, 3560
+	jal drawLine
+	
+	li $a0, 3608
+	li $a1, 3624
+	jal drawLine
+	
+	li $a0, 3672
+	li $a1, 3688
+	jal drawLine
+	
+	li $a0, 3736
+	li $a1, 3752
+	jal drawLine
+	
+	li $a0, 3800
+	li $a1, 3816
+	jal drawLine
+	
+	li $a0, 3864
+	li $a1, 3880
+	jal drawLine
+	
+	li $a0, 3928
+	li $a1, 3944
+	jal drawLine
+	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	jr $ra	
 
 #drawing loops	
 
