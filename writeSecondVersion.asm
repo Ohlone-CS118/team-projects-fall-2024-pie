@@ -3,39 +3,41 @@ buffer: 		.space 2000		# buffer for file contents
 input_buffer:		.space 1000		# buffer for input contents
 result:			.space 3000		# buffer for final result to print ot txt file after editing
 
+caribou_file_path: 	.asciiz "GitHub/team-projects-fall-2024-pie/caribouFacts.txt"
+turtle_file_path: 	.asciiz "GitHub/team-projects-fall-2024-pie/turtleFacts.txt"
+parrot_file_path: 	.asciiz "GitHub/team-projects-fall-2024-pie/parrotFacts.txt"
+
 prompt_facts: 		.asciiz "\nFacts about " 
-choose_animal: 		.asciiz "Please choose an animal to view (1- caribou, 2-turtle, 3-parrot): "
+choose_animal: 		.asciiz "Please choose an animal to view (1- caribou, 2- turtle, 3- parrot, 4- exit): "
 
 caribou: 		.asciiz "Caribou: \n"
 parrot: 		.asciiz "Parrots: \n"
 turtle: 		.asciiz "Turtles: \n"
 
-
-caribou_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/caribouFacts.txt"
-turtle_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/turtleFacts.txt"
-parrot_file_path: 	.asciiz "CS118/team-projects-fall-2024-pie/parrotFacts.txt"
-
-
 prompt_edit: 		.asciiz "\nEdit a fact about this animal? (1 - Yes / 2 - No): "
-invalid_choice:		.asciiz "Please enter a valid number"
+invalid_choice:		.asciiz "Please enter a valid number\n"
 write_fact:		.asciiz "Please write in your fact: "
-
 .text 
 
-main: 	
-	j main_loop
+.globl Write2
+
+Write2:
+	#j main_loop
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 main_loop: 		
 # delete this later (fill in code for main)
-	li $v0, 4
-	la $a0, choose_animal
-	syscall  
+	#li $v0, 4
+	#la $a0, choose_animal
+	#syscall  
 
-	li $v0, 5
-	syscall
-	move $a3, $v0 
+	#li $v0, 5
+	#syscall
+	#move $a3, $v0 
 # delete this after ^^
 
 	# users choie
+	
 	li $t0, 1		# caribou 
 	li $t1, 2		# turtle
 	li $t2, 3		# parrot
@@ -57,23 +59,19 @@ caribou_path:
 	la $t5, caribou 		# t5= animal name
 	j print_facts
 	
-	j main_loop
+	#j main_loop
 turtle_path: 
 	la $t4, turtle_file_path
 	la $t5, turtle
 	j print_facts
 	
-	j main_loop
+	#j main_loop
 parrot_path: 
 	la $t4, parrot_file_path
 	la $t5, parrot
-	j print_facts
+	#j print_facts
 	
-	j main_loop
-exit_program: 
-	li $v0, 10
-	syscall 
-
+	#j main_loop
 
 print_facts: 
 	subi $sp, $sp, 4
@@ -102,11 +100,17 @@ print_facts:
 	# ask if user wants to edit
 	jal edit_or_not
 	
-	j main_loop
+	#j main_loop
 	
+	
+	
+	#jr $ra
+	
+exit_program: 
+
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
-	
+
 	jr $ra
 	
 # appends new facts user enters to previous ones in file
@@ -119,11 +123,15 @@ appendFact:
 	la $s2, result
 copy_buffer:
 	lb $s3,	0($s0)		# load byte from buffer
-	beqz $s3, copy_input	# if null copy input
+	beqz $s3, add_line	# if null copy input
 	sb $s3, 0($s2)		# store byte into result
 	addi $s0, $s0, 1	# increment to next byte in buffer
 	addi $s2, $s2, 1	# increment to next byte in result
 	j copy_buffer
+add_line:
+	li $s6, 10		# ASCII value for new line
+	sb $s6, 0($s2)
+	addi $s2, $s2, 1	# increment by one 
 copy_input:
 	lb $s3,	0($s1)		# load byte from buffer
 	beqz $s3, end_copy	# if null copy input
