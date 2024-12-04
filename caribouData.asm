@@ -1,5 +1,4 @@
-#this file will hold base map and migration data, have loop in here that displays each migration data on top of base map based on user choice
-#code for jumping for each animal will be outside this file
+#this file will hold base map and migration data, for caribou
 .data
 
 # set display to:
@@ -25,25 +24,73 @@ define:
 	.eqv	summer	0x0094241a
 	.eqv	fall	0x00e68d3e
 .text
+.globl printParrot
 
 printCaribou:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+
 	jal alaska
-	#li $a2, winter
-	#jal caribuWS
-	
-	#jal caribuSpring
-	
-	#li $a2, summer
-	#jal caribuWS
-	
-	#jal caribu fall
-	#if user picks 
-	li $v0, 10	#exit safely
-	syscall
 
+	beq $s0, $t0, caribouWinter	# branch to proper season for parrot migration map
+	beq $s0, $t1, caribouSpring
+	beq $s0, $t2, caribouSummer
+	beq $s0, $t3, caribouAutumn
+	
+	caribouWinter:
+	li $a2, winter
+	jal caribouWS
+	j caribouEnd
+	
+	caribouSpring:
+	jal caribouS
+	j caribouEnd
+	
+	parrotSummer:
+	li $a2, summer
+	jal caribouWS
+	j caribouEnd
+	
+	caribouAutumn:
+	jal caribouF
+
+	caribouEnd:
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	jr $ra
+#base map
 alaska:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
+	li $a2, water #store color for bakground
+	li $s1, DISPLAY
+		#set s2 = last memory address of the display
+	li $s2, WIDTH
+	mul $s2, $s2, HEIGHT
+	mul $s2, $s2, 4		#word
+	add $s2, $s1, $s2
+	jal backgroundLoop
+	#alaska land
+	li $a2, land
+	
 
-caribuWS:
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+		
+	jr $ra
+	
+backgroundLoop:
+	
+	sw $a2, 0($s1)
+	addiu $s1, $s1, 4
+	ble $s1, $s2, backgroundLoop
+	jr $ra
+
+#migration data
+caribouWS: #migration data for winter and summer
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 	
 	li $a0, 854
 	li $a1,	861
@@ -209,20 +256,16 @@ caribuWS:
 	li $a1,	3361
 	jal drawLine
 	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	
 	jr $ra
 	
-caribuSpring:
+caribouS: #data for spring
 
-caribuFall:
+caribouF: #data for fall
 
 #drawing loops	
-#preconditions: a2 is color
-backgroundLoop:
-	sw $a2, 0($s1)
-	addiu $s1, $s1, 4
-	ble $s1, $s2, backgroundLoop
-	
-	jr $ra
 
 #preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
@@ -239,7 +282,7 @@ forLoop:
     bge  $t0, $t2, drawDone  # Exit if start >= end
     sw   $a2, 0($t0)          # Store the color in memory
     addiu $t0, $t0, PIXEL_SIZE # Move to the next pixel (4 bytes forward)
-    j    forLoop             # Repeat the loop
+    j    forLoop             	# Repeat the loop
 
 drawDone:
-    jr   $ra                  # Return from the function
+	jr   $ra                  # Return from the function
