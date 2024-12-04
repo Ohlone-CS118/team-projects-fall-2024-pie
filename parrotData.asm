@@ -25,8 +25,12 @@ define:
 	.eqv	summer	0x0094241a
 	.eqv	fall	0x00e68d3e
 .text
+.globl printParrot
 
 printParrot:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	jal australia
 	#li $a2, fall
 	#jal parrotSF
@@ -38,10 +42,14 @@ printParrot:
 	
 	#jal parrotSummer
 	
-	li $v0, 10	#exit safely
-	syscall
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	jr $ra
 
 australia:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	li $a2, water #store color for bakground
 	li $s1, DISPLAY
 		#set s2 = last memory address of the display
@@ -331,18 +339,27 @@ australia:
 	li $a0, 3438
 	li $a1, 3439
 	jal drawLine
-	
+
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4	
 	jr $ra
 	
 backgroundLoop:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	sw $a2, 0($s1)
 	addiu $s1, $s1, 4
 	ble $s1, $s2, backgroundLoop
 	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
 	jr $ra
 
 #migration data
 parrotSF:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 	
 	li $a0, 64
 	li $a1, 67
@@ -493,10 +510,15 @@ parrotSF:
 	li $a1, 3109
 	jal drawLine
 	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4	
 	jr $ra
 	
 	
 parrotWinter:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	li $a2, winter
 	
 	li $a0, 512
@@ -603,9 +625,14 @@ parrotWinter:
 	li $a1, 1943
 	jal drawLine
 	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
 	jr $ra
 
 parrotSummer:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	li $a2, summer
 	
 	li $a0, 3875 
@@ -624,6 +651,8 @@ parrotSummer:
 	li $a1, 4073
 	jal drawLine
 	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
 	jr $ra	
 
 #drawing loops	
@@ -631,6 +660,8 @@ parrotSummer:
 
 #preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 
     # Calculate the starting address of the row (DISPLAY + a0 * PIXEL_SIZE)
     li   $t0, DISPLAY        # Base address of the display
@@ -648,6 +679,8 @@ forLoop:
     j    forLoop             # Repeat the loop
 
 drawDone:
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
 	
 	jr   $ra                  # Return from the function
 
