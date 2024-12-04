@@ -25,8 +25,12 @@ define:
 	.eqv	summer	0x0094241a
 	.eqv	fall	0x00e68d3e
 .text
-.
-main:
+.globl printParrot
+
+printParrot:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	jal australia
 	#li $a2, fall
 	#jal parrotSF
@@ -38,10 +42,15 @@ main:
 	
 	#jal parrotSummer
 	
-	li $v0, 10	#exit safely
-	syscall
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	
+	jr $ra
 
 australia:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	li $a2, water #store color for bakground
 	li $s1, DISPLAY
 		#set s2 = last memory address of the display
@@ -278,16 +287,6 @@ australia:
 	li $a1, 4074
 	jal drawLine
 	
-	#lakes
-	li $a2, water
-	
-	li $a0, 1884
-	li $a1, 1888
-	jal drawLine
-	
-	li $a0, 1947
-	li $a1, 1952
-	jal drawLine
 	
 	li $a0, 2009
 	li $a1, 2017
@@ -305,54 +304,185 @@ australia:
 	li $a1, 2987
 	jal drawLine
 	
-	#water cutouts
-	li $a2, water
-	
-	li $a0, 1884
-	li $a1, 1888
-	jal drawLine
-	
-	li $a0, 1947
-	li $a1, 1952
-	jal drawLine
-	
-	li $a0, 2009
-	li $a1, 2017
-	jal drawLine
-	
-	li $a0, 2071
-	li $a1, 2082
-	jal drawLine
-	
-	li $a0, 3042
-	li $a1, 3049
-	jal drawLine
-	
-	li $a0, 3438
-	li $a1, 3439
-	jal drawLine
-	
-	#parrotSF:
-	li $a2, spring
-	
-	li $a0,
-	#jr $ra
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4	
+	jr $ra
 	
 backgroundLoop:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	sw $a2, 0($s1)
 	addiu $s1, $s1, 4
 	ble $s1, $s2, backgroundLoop
 	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
 	jr $ra
 
 #migration data
-#parrotSF:
-	li $a0, 
+parrotSF:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 	
-	#jr $ra
+	li $a0, 64
+	li $a1, 67
+	jal drawLine
+	
+	li $a0, 128
+	li $a1, 132
+	jal drawLine
+	
+	li $a0, 192
+	li $a1, 197
+	jal drawLine
+	
+	li $a0, 257
+	li $a1, 262
+	jal drawLine
+	
+	li $a0, 321
+	li $a1, 327
+	jal drawLine
+	
+	li $a0, 386
+	li $a1, 391
+	jal drawLine
+	
+	li $a0, 450
+	li $a1, 456
+	jal drawLine
+	
+	li $a0, 515
+	li $a1, 521
+	jal drawLine
+	
+	li $a0, 580
+	li $a1, 585
+	jal drawLine
+	
+	li $a0, 644
+	li $a1, 650
+	jal drawLine
+	
+	li $a0, 709
+	li $a1, 715
+	jal drawLine
+	
+	li $a0, 774
+	li $a1, 779
+	jal drawLine
+	
+	li $a0, 838
+	li $a1, 844
+	jal drawLine
+	
+	li $a0, 903
+	li $a1, 909
+	jal drawLine
+	
+	li $a0, 967
+	li $a1, 974
+	jal drawLine
+	
+	li $a0, 1032
+	li $a1, 1039
+	jal drawLine
+	
+	li $a0, 1097
+	li $a1, 1105
+	jal drawLine
+	
+	li $a0, 1162
+	li $a1, 1171
+	jal drawLine
+	#multiply all numbers above this by 14 to get correct placement oops
+	
+	li $a0, 1995
+	li $a1, 2021
+	jal drawLine
+	
+	li $a0, 2059
+	li $a1, 2085
+	jal drawLine
+	
+	li $a0, 2059
+	li $a1, 2085
+	jal drawLine
+	
+	li $a0, 2124
+	li $a1, 2149
+	jal drawLine
+	
+	li $a0, 2189
+	li $a1, 2213
+	jal drawLine
+	
+	li $a0, 2254
+	li $a1, 2277
+	jal drawLine
+	
+	li $a0, 2319
+	li $a1, 2341
+	jal drawLine
+	
+	li $a0, 2384
+	li $a1, 2405
+	jal drawLine
+	
+	li $a0, 2449
+	li $a1, 2469
+	jal drawLine
+	
+	li $a0, 2514
+	li $a1, 2533
+	jal drawLine
+	
+	li $a0, 2579
+	li $a1, 2597
+	jal drawLine
+	
+	li $a0, 2644
+	li $a1, 2661
+	jal drawLine
+	
+	li $a0, 2709
+	li $a1, 2725
+	jal drawLine
+	
+	li $a0, 2774
+	li $a1, 2789
+	jal drawLine
+	
+	li $a0, 2839
+	li $a1, 2853
+	jal drawLine
+
+	li $a0, 2904
+	li $a1, 2917
+	jal drawLine
+	
+	li $a0, 2969
+	li $a1, 2981
+	jal drawLine
+	
+	li $a0, 3034
+	li $a1, 3045
+	jal drawLine
+	
+	li $a0, 3099
+	li $a1, 3109
+	jal drawLine
+	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4	
+	jr $ra
 	
 	
 parrotWinter:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	li $a2, winter
 	
 	li $a0, 512
@@ -459,9 +589,14 @@ parrotWinter:
 	li $a1, 1943
 	jal drawLine
 	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
 	jr $ra
 
 parrotSummer:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
 	li $a2, summer
 	
 	li $a0, 3875 
@@ -480,6 +615,8 @@ parrotSummer:
 	li $a1, 4073
 	jal drawLine
 	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
 	jr $ra	
 
 #drawing loops	
@@ -487,6 +624,8 @@ parrotSummer:
 
 #preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 
     # Calculate the starting address of the row (DISPLAY + a0 * PIXEL_SIZE)
     li   $t0, DISPLAY        # Base address of the display
@@ -504,5 +643,9 @@ forLoop:
     j    forLoop             # Repeat the loop
 
 drawDone:
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
 	
 	jr   $ra                  # Return from the function
+
+
