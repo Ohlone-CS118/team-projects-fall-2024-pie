@@ -33,10 +33,7 @@ printParrot:
 	
 	jal australia
 	#li $a2, fall
-	#jal parrotSF
-	
-	#jal parrotWinter
-	
+	#jal parrotSF	
 	#li $a2, spring
 	#jal parrotSF
 	
@@ -44,7 +41,6 @@ printParrot:
 	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
-	
 	jr $ra
 
 australia:
@@ -286,38 +282,16 @@ australia:
 	li $a0, 4065
 	li $a1, 4074
 	jal drawLine
-	
-	
-	li $a0, 2009
-	li $a1, 2017
-	jal drawLine
-	
-	li $a0, 2071
-	li $a1, 2082
-	jal drawLine
-	
-	li $a0, 2135
-	li $a1, 2146
-	jal drawLine
-	
-	li $a0, 2971
-	li $a1, 2987
-	jal drawLine
-	
+
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
 	jr $ra
 	
 backgroundLoop:
-	subi $sp, $sp, 4
-	sw $ra, 0($sp)
 	
 	sw $a2, 0($s1)
 	addiu $s1, $s1, 4
 	ble $s1, $s2, backgroundLoop
-	
-	lw $ra, 0($sp)
-	addi $sp, $sp, 4
 	jr $ra
 
 #migration data
@@ -624,9 +598,6 @@ parrotSummer:
 
 #preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
-	subi $sp, $sp, 4
-	sw $ra, 0($sp)
-
     # Calculate the starting address of the row (DISPLAY + a0 * PIXEL_SIZE)
     li   $t0, DISPLAY        # Base address of the display
     mul  $t1, $a0, PIXEL_SIZE  # Starting pixel * PIXEL_SIZE (4 bytes per pixel)
@@ -640,12 +611,9 @@ forLoop:
     bge  $t0, $t2, drawDone  # Exit if start >= end
     sw   $a2, 0($t0)          # Store the color in memory
     addiu $t0, $t0, PIXEL_SIZE # Move to the next pixel (4 bytes forward)
-    j    forLoop             # Repeat the loop
+    j    forLoop             	# Repeat the loop
 
 drawDone:
-	lw $ra, 0($sp)
-	addi $sp, $sp, 4
-	
 	jr   $ra                  # Return from the function
 
 
