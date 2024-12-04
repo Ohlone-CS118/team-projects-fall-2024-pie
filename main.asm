@@ -86,6 +86,9 @@ animal1:
 
 	# read file based on animal option
 	# jal print caribou funfacts 
+	move $s5, $a3
+	jal soundsCaribou
+	move $a3,$s5
 	jal Write2
 	# print txt file
 	#jal WriteTo3   
