@@ -1,5 +1,9 @@
 .text
+.globl soundsParrot
 
+soundsParrot:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 # Instrument and volume setup
 li $a2, 23       # instrument
 li $a3, 60       # medium volume 
@@ -296,8 +300,8 @@ li $a3, 60       # medium volume
     li $v0, 33
     syscall
 
-    
-    
-# Exit program 
-li $v0, 10
-syscall 
+    # Exit program 
+    	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	
+	jr $ra
