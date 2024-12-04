@@ -106,6 +106,9 @@ animal2:
 	# read file based on animal option
 	# jal print turtle fun facts
 	#jal factMain
+	move $s5, $a3
+	jal soundsParrot
+	move $a3,$s5
 	jal Write2
 
 	# print txt file
