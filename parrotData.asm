@@ -38,7 +38,6 @@ main:
 	
 	#jal parrotSummer
 	
-	#if user picks 
 	li $v0, 10	#exit safely
 	syscall
 
@@ -333,19 +332,12 @@ australia:
 	li $a1, 3439
 	jal drawLine
 	
+	#parrotSF:
+	li $a2, spring
+	
+	li $a0,
 	#jr $ra
-#migration data
-#parrotSF:
-	li $a2, winter
 	
-	
-	
-	jr $ra
-#parrotWinter:
-
-#Parrot Summer:
-#drawing loops	
-#preconditions: a2 is color
 backgroundLoop:
 	sw $a2, 0($s1)
 	addiu $s1, $s1, 4
@@ -353,8 +345,149 @@ backgroundLoop:
 	
 	jr $ra
 
+#migration data
+#parrotSF:
+	li $a0, 
+	
+	#jr $ra
+	
+	
+parrotWinter:
+	li $a2, winter
+	
+	li $a0, 512
+	li $a1, 516
+	jal drawLine
+	
+	li $a0, 576
+	li $a1, 582
+	jal drawLine
+	
+	li $a0, 640
+	li $a1, 647
+	jal drawLine
+	
+	li $a0, 704
+	li $a1, 712
+	jal drawLine
+	
+	li $a0, 768
+	li $a1, 777
+	jal drawLine
+	
+	li $a0, 833
+	li $a1, 841
+	jal drawLine
+	
+	li $a0, 899
+	li $a1, 906
+	jal drawLine
+	
+	li $a0, 964
+	li $a1, 971
+	jal drawLine
+	
+	li $a0, 1029
+	li $a1, 1036
+	jal drawLine
+	
+	li $a0, 1094
+	li $a1, 1101
+	jal drawLine
+	
+	li $a0, 1159
+	li $a1, 1166
+	jal drawLine
+	
+	li $a0, 1223
+	li $a1, 1230
+	jal drawLine
+	
+	li $a0, 1288
+	li $a1, 1295
+	jal drawLine
+	
+	li $a0, 1352
+	li $a1, 1360
+	jal drawLine
+	
+	li $a0, 1417
+	li $a1, 1425
+	jal drawLine
+	
+	li $a0, 1431
+	li $a1, 1440
+	jal drawLine
+	
+	li $a0, 1482
+	li $a1, 1506
+	jal drawLine
+	
+	li $a0, 1546
+	li $a1, 1571
+	jal drawLine
+	
+	li $a0, 1611
+	li $a1, 1636
+	jal drawLine
+	
+	li $a0, 1676
+	li $a1, 1701
+	jal drawLine
+	
+	li $a0, 1741
+	li $a1, 1765
+	jal drawLine
+	
+	li $a0, 1808
+	li $a1, 1819
+	jal drawLine
+	
+	li $a0, 1824
+	li $a1, 1829
+	jal drawLine
+	
+	li $a0, 1873
+	li $a1, 1881
+	jal drawLine
+	
+	li $a0, 1889
+	li $a1, 1893
+	jal drawLine
+	
+	li $a0, 1938
+	li $a1, 1943
+	jal drawLine
+	
+	jr $ra
+
+parrotSummer:
+	li $a2, summer
+	
+	li $a0, 3875 
+	li $a1, 3881
+	jal drawLine
+	
+	li $a0, 3939 
+	li $a1, 3945
+	jal drawLine
+	
+	li $a0, 4003 
+	li $a1, 4009
+	jal drawLine
+	
+	li $a0, 4067 
+	li $a1, 4073
+	jal drawLine
+	
+	jr $ra	
+
+#drawing loops	
+#preconditions: a2 is color
+
 #preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
+
     # Calculate the starting address of the row (DISPLAY + a0 * PIXEL_SIZE)
     li   $t0, DISPLAY        # Base address of the display
     mul  $t1, $a0, PIXEL_SIZE  # Starting pixel * PIXEL_SIZE (4 bytes per pixel)
@@ -371,4 +504,5 @@ forLoop:
     j    forLoop             # Repeat the loop
 
 drawDone:
-    jr   $ra                  # Return from the function
+	
+	jr   $ra                  # Return from the function
