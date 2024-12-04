@@ -1,5 +1,4 @@
-#this file will hold base map and migration data, have loop in here that displays each migration data on top of base map based on user choice
-#code for jumping for each animal will be outside this file
+#this file will hold base map and migration data, for parrot
 .data
 
 # set display to:
@@ -30,15 +29,36 @@ define:
 printParrot:
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
-	
+
 	jal australia
-	#li $a2, fall
-	#jal parrotSF	
-	#li $a2, spring
-	#jal parrotSF
+
+	beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
+	beq $s0, $t1, parrotSpring
+	beq $s0, $t2, parrotSummer
+	beq $s0, $t3, parrotAutumn
 	
+<<<<<<< HEAD
 	jal parrotSummer
+=======
+	parrotWinter:
+	jal parrotW
+	j parrotEnd
+>>>>>>> 9761b51038c12901e3a6f4ba809331e41673bd5f
 	
+	parrotSpring:
+	li $a2, spring
+	jal parrotSF
+	j parrotEnd
+	
+	parrotSummer:
+	jal parrotS
+	j parrotEnd
+	
+	parrotAutumn:
+	li $a2, fall
+	jal parrotSF
+
+	parrotEnd:
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
 	jr $ra
@@ -295,82 +315,81 @@ backgroundLoop:
 	jr $ra
 
 #migration data
-parrotSF:
+parrotSF: #data for spring and fall
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
 	
-	li $a0, 64
-	li $a1, 67
+	li $a0, 832
+	li $a1, 835
 	jal drawLine
 	
-	li $a0, 128
-	li $a1, 132
+	li $a0, 896
+	li $a1, 900
 	jal drawLine
 	
-	li $a0, 192
-	li $a1, 197
+	li $a0, 961
+	li $a1, 965
 	jal drawLine
 	
-	li $a0, 257
-	li $a1, 262
+	li $a0, 1025
+	li $a1, 1030
 	jal drawLine
 	
-	li $a0, 321
-	li $a1, 327
+	li $a0, 1090
+	li $a1, 1095
 	jal drawLine
 	
-	li $a0, 386
-	li $a1, 391
+	li $a0, 1154
+	li $a1, 1159
 	jal drawLine
 	
-	li $a0, 450
-	li $a1, 456
+	li $a0, 1219
+	li $a1, 1224
 	jal drawLine
 	
-	li $a0, 515
-	li $a1, 521
+	li $a0, 1284
+	li $a1, 1289
 	jal drawLine
 	
-	li $a0, 580
-	li $a1, 585
+	li $a0, 1349
+	li $a1, 1353
 	jal drawLine
 	
-	li $a0, 644
-	li $a1, 650
+	li $a0, 1413
+	li $a1, 1418
 	jal drawLine
 	
-	li $a0, 709
-	li $a1, 715
+	li $a0, 1478
+	li $a1, 1482
 	jal drawLine
 	
-	li $a0, 774
-	li $a1, 779
+	li $a0, 1542
+	li $a1, 1547
 	jal drawLine
 	
-	li $a0, 838
-	li $a1, 844
+	li $a0, 1606
+	li $a1, 1612
 	jal drawLine
 	
-	li $a0, 903
-	li $a1, 909
+	li $a0, 1670
+	li $a1, 1676
 	jal drawLine
 	
-	li $a0, 967
-	li $a1, 974
+	li $a0, 1735
+	li $a1, 1741
 	jal drawLine
 	
-	li $a0, 1032
-	li $a1, 1039
+	li $a0, 1800
+	li $a1, 1806
 	jal drawLine
 	
-	li $a0, 1097
-	li $a1, 1105
+	li $a0, 1865
+	li $a1, 1872
 	jal drawLine
 	
-	li $a0, 1162
-	li $a1, 1171
+	li $a0, 1930
+	li $a1, 1938
 	jal drawLine
-	#multiply all numbers above this by 14 to get correct placement oops
 	
 	li $a0, 1995
 	li $a1, 2021
@@ -448,12 +467,56 @@ parrotSF:
 	li $a1, 3109
 	jal drawLine
 	
+	li $a0, 3163
+	li $a1, 3173
+	jal drawLine
+	
+	li $a0, 3227
+	li $a1, 3237
+	jal drawLine
+	
+	li $a0, 3291
+	li $a1, 3301
+	jal drawLine
+	
+	li $a0, 3355
+	li $a1, 3365
+	jal drawLine
+	
+	li $a0, 3420
+	li $a1, 3429
+	jal drawLine
+	
+	li $a0, 3485
+	li $a1, 3493
+	jal drawLine
+	
+	li $a0, 3550
+	li $a1, 3557
+	jal drawLine
+	
+	li $a0, 3615
+	li $a1, 3621
+	jal drawLine
+	
+	li $a0, 3680
+	li $a1, 3685
+	jal drawLine
+	
+	li $a0, 3745
+	li $a1, 3749
+	jal drawLine
+	
+	li $a0, 3810
+	li $a1, 3813
+	jal drawLine
+	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
 	jr $ra
 	
 	
-parrotWinter:
+parrotW: #data for winter
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
 	
@@ -567,7 +630,7 @@ parrotWinter:
 	addi $sp, $sp, 4
 	jr $ra
 
-parrotSummer:
+parrotS: #data for summer
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
 	
@@ -594,7 +657,6 @@ parrotSummer:
 	jr $ra	
 
 #drawing loops	
-#preconditions: a2 is color
 
 #preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
@@ -615,5 +677,3 @@ forLoop:
 
 drawDone:
 	jr   $ra                  # Return from the function
-
-

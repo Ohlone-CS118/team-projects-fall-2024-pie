@@ -1,5 +1,4 @@
-#this file will hold base map and migration data, have loop in here that displays each migration data on top of base map based on user choice
-#code for jumping for each animal will be outside this file
+#this file will hold base map and migration data, for caribou
 .data
 
 # set display to:
@@ -25,25 +24,312 @@ define:
 	.eqv	summer	0x0094241a
 	.eqv	fall	0x00e68d3e
 .text
+.globl printCaribou
 
 printCaribou:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+
 	jal alaska
-	#li $a2, winter
-	#jal caribuWS
-	
-	#jal caribuSpring
-	
-	#li $a2, summer
-	#jal caribuWS
-	
-	#jal caribu fall
-	#if user picks 
-	li $v0, 10	#exit safely
-	syscall
 
+	beq $s0, $t0, caribouWinter	# branch to proper season for parrot migration map
+	beq $s0, $t1, caribouSpring
+	beq $s0, $t2, caribouSummer
+	beq $s0, $t3, caribouAutumn
+	
+	caribouWinter:
+	li $a2, winter
+	jal caribouWS
+	j caribouEnd
+	
+	caribouSpring:
+	jal caribouS
+	j caribouEnd
+	
+	caribouSummer:
+	li $a2, summer
+	jal caribouWS
+	j caribouEnd
+	
+	caribouAutumn:
+	jal caribouF
+
+	caribouEnd:
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	jr $ra
+#base map
 alaska:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
+	li $a2, land #store color for bakground
+	li $s1, DISPLAY
+		#set s2 = last memory address of the display
+	li $s2, WIDTH
+	mul $s2, $s2, HEIGHT
+	mul $s2, $s2, 4		#word
+	add $s2, $s1, $s2
+	jal backgroundLoop
+	#alaska water cutouts
+	li $a2, water
+	
+	li $a0, 0
+	li $a1, 15
+	jal drawLine
+	
+	li $a0, 52
+	li $a1, 76
+	jal drawLine
+	
+	li $a0, 117
+	li $a1, 139
+	jal drawLine
+	
+	li $a0, 181
+	li $a1, 202
+	jal drawLine
+	
+	li $a0, 247
+	li $a1, 265
+	jal drawLine
+	
+	li $a0, 320
+	li $a1, 329
+	jal drawLine
+	
+	li $a0, 384
+	li $a1, 392
+	jal drawLine
+	
+	li $a0, 448
+	li $a1, 456
+	jal drawLine
+	
+	li $a0, 512
+	li $a1, 518
+	jal drawLine
+	
+	li $a0, 576
+	li $a1, 581
+	jal drawLine
+	
+	li $a0, 640
+	li $a1, 643
+	jal drawLine
+	
+	li $a0, 704
+	li $a1, 705
+	jal drawLine
+	
+	li $a0, 1088
+	li $a1, 1089
+	jal drawLine
+	
+	li $a0, 1152
+	li $a1, 1154
+	jal drawLine
+	
+	li $a0, 1216
+	li $a1, 1218
+	jal drawLine
+	
+	li $a0, 1280
+	li $a1, 1283
+	jal drawLine
+	
+	li $a0, 1344
+	li $a1, 1347
+	jal drawLine
+	
+	li $a0, 1408
+	li $a1, 1412
+	jal drawLine
+	
+	li $a0, 1472
+	li $a1, 1476
+	jal drawLine
+	
+	li $a0, 1536
+	li $a1, 1541
+	jal drawLine
+	
+	li $a0, 1600
+	li $a1, 1605
+	jal drawLine
+	
+	li $a0, 1664
+	li $a1, 1669
+	jal drawLine
+	
+	li $a0, 1728
+	li $a1, 1734
+	jal drawLine
+	
+	li $a0, 1792
+	li $a1, 1798
+	jal drawLine
+	
+	li $a0, 1856
+	li $a1, 1862
+	jal drawLine
+	
+	li $a0, 1920
+	li $a1, 1926
+	jal drawLine
+	
+	li $a0, 1984
+	li $a1, 1990
+	jal drawLine
+	
+	li $a0, 2048
+	li $a1, 2054
+	jal drawLine
+	
+	li $a0, 2112
+	li $a1, 2119
+	jal drawLine
+	
+	li $a0, 2176
+	li $a1, 2187
+	jal drawLine
+	
+	li $a0, 2240
+	li $a1, 2252
+	jal drawLine
+	
+	li $a0, 2304
+	li $a1, 2316
+	jal drawLine
+	
+	li $a0, 2368
+	li $a1, 2381
+	jal drawLine
+	
+	li $a0, 2432
+	li $a1, 2446
+	jal drawLine
+	
+	li $a0, 2496
+	li $a1, 2511
+	jal drawLine
 
-caribuWS:
+	li $a0, 2560
+	li $a1, 2576
+	jal drawLine
+	
+	li $a0, 2624
+	li $a1, 2641
+	jal drawLine
+	
+	li $a0, 2688
+	li $a1, 2695
+	jal drawLine
+	
+	li $a0, 2699
+	li $a1, 2705
+	jal drawLine
+	
+	li $a0, 2752
+	li $a1, 2756
+	jal drawLine
+	
+	li $a0, 2763
+	li $a1, 2769
+	jal drawLine
+	
+	li $a0, 2816
+	li $a1, 2817
+	jal drawLine
+	
+	li $a0, 2827
+	li $a1, 2831
+	jal drawLine
+	
+	li $a0, 3264
+	li $a1, 3265
+	jal drawLine
+	
+	li $a0, 3328
+	li $a1, 3331
+	jal drawLine
+	
+	li $a0, 3392
+	li $a1, 3396
+	jal drawLine
+	
+	li $a0, 3456
+	li $a1, 3461
+	jal drawLine
+	
+	li $a0, 3472
+	li $a1, 3474
+	jal drawLine
+	
+	li $a0, 3520
+	li $a1, 3525
+	jal drawLine
+	
+	li $a0, 3535
+	li $a1, 3539
+	jal drawLine
+	
+	li $a0, 3584
+	li $a1, 3590
+	jal drawLine
+	
+	li $a0, 3598
+	li $a1, 3603
+	jal drawLine
+	
+	li $a0, 3648
+	li $a1, 3655
+	jal drawLine
+	
+	li $a0, 3660
+	li $a1, 3668
+	jal drawLine
+	
+	li $a0, 3712
+	li $a1, 3732
+	jal drawLine
+	
+	li $a0, 3776
+	li $a1, 3796
+	jal drawLine
+	
+	li $a0, 3840
+	li $a1, 3859
+	jal drawLine
+	
+	li $a0, 3904
+	li $a1, 3923
+	jal drawLine
+	
+	li $a0, 3968
+	li $a1, 3986
+	jal drawLine
+	
+	li $a0, 4032
+	li $a1, 4048
+	jal drawLine
+
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+		
+	jr $ra
+	
+backgroundLoop:
+	
+	sw $a2, 0($s1)
+	addiu $s1, $s1, 4
+	ble $s1, $s2, backgroundLoop
+	jr $ra
+
+#migration data
+caribouWS: #migration data for winter and summer
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
 	
 	li $a0, 854
 	li $a1,	861
@@ -209,20 +495,127 @@ caribuWS:
 	li $a1,	3361
 	jal drawLine
 	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	
 	jr $ra
 	
-caribuSpring:
-
-caribuFall:
+caribouS: #data for spring
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
+	li $a2, spring
+	
+	li $a0, 212
+	li $a1, 222
+	jal drawLine
+	
+	li $a0, 276
+	li $a1, 286
+	jal drawLine
+	
+	li $a0, 340
+	li $a1, 350
+	jal drawLine
+	
+	li $a0, 404
+	li $a1, 414
+	jal drawLine
+	
+	li $a0, 468
+	li $a1, 478
+	jal drawLine
+	
+	li $a0, 532
+	li $a1, 542
+	jal drawLine
+	
+	li $a0, 596
+	li $a1, 606
+	jal drawLine
+	
+	li $a0, 660
+	li $a1, 670
+	jal drawLine
+	
+	li $a0, 724
+	li $a1, 734
+	jal drawLine
+	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	jr $ra	
+caribouF: #data for fall
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
+	
+	li $a2, fall
+	
+	li $a0, 3014
+	li $a1, 3036
+	jal drawLine
+	
+	li $a0, 3078
+	li $a1, 3100
+	jal drawLine
+	
+	li $a0, 3142
+	li $a1, 3164
+	jal drawLine
+	
+	li $a0, 3206
+	li $a1, 3228
+	jal drawLine
+	
+	li $a0, 3270
+	li $a1, 3292
+	jal drawLine
+	
+	li $a0, 3334
+	li $a1, 3356
+	jal drawLine
+	
+	li $a0, 3398
+	li $a1, 3420
+	jal drawLine
+	
+	li $a0, 3480
+	li $a1, 3496
+	jal drawLine
+	
+	li $a0, 3544
+	li $a1, 3560
+	jal drawLine
+	
+	li $a0, 3608
+	li $a1, 3624
+	jal drawLine
+	
+	li $a0, 3672
+	li $a1, 3688
+	jal drawLine
+	
+	li $a0, 3736
+	li $a1, 3752
+	jal drawLine
+	
+	li $a0, 3800
+	li $a1, 3816
+	jal drawLine
+	
+	li $a0, 3864
+	li $a1, 3880
+	jal drawLine
+	
+	li $a0, 3928
+	li $a1, 3944
+	jal drawLine
+	
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	jr $ra	
 
 #drawing loops	
-#preconditions: a2 is color
-backgroundLoop:
-	sw $a2, 0($s1)
-	addiu $s1, $s1, 4
-	ble $s1, $s2, backgroundLoop
-	
-	jr $ra
 
 #preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
@@ -239,7 +632,7 @@ forLoop:
     bge  $t0, $t2, drawDone  # Exit if start >= end
     sw   $a2, 0($t0)          # Store the color in memory
     addiu $t0, $t0, PIXEL_SIZE # Move to the next pixel (4 bytes forward)
-    j    forLoop             # Repeat the loop
+    j    forLoop             	# Repeat the loop
 
 drawDone:
-    jr   $ra                  # Return from the function
+	jr   $ra                  # Return from the function
