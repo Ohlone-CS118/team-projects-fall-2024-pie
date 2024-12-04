@@ -295,18 +295,7 @@ li $a3, 60       # medium volume
     li $a1, 700  # Duration: 500 ms 
     li $v0, 33
     syscall
-    
-   
-   
-    
-    
-    
 
-
-    
-    
-    
-    
     
     
 # Exit program 
