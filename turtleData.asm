@@ -23,6 +23,8 @@ define:
 	.eqv	spring	0x00e6948f
 	.eqv	summer	0x0094241a
 	.eqv	fall	0x00e68d3e
+	.eqv	shell	0x008b93af
+	.eqv	skin	0x00143464
 .text
 .globl printTurtle
 
@@ -40,6 +42,28 @@ printTurtle:
 	turtleWinter:
 	li $a2, winter
 	jal turtleSW
+		#mini turtle
+		li $a2, shell
+		li $a0, 2504
+		li $a1, 2505
+		jal drawLine
+	
+		li $a0, 2567
+		li $a1, 2570
+		jal drawLine
+
+		li $a2, skin
+		li $a0, 2570
+		li $a1, 2571
+		jal drawLine
+	
+		li $a0, 2631
+		li $a1, 2632
+		jal drawLine
+	
+		li $a0, 2633
+		li $a1, 2634
+		jal drawLine
 	j turtleEnd
 	
 	turtleSpring:
@@ -49,6 +73,30 @@ printTurtle:
 	turtleSummer:
 	li $a2, summer
 	jal turtleSW
+	
+		#mini turtle
+		li $a2, shell
+		li $a0, 661
+		li $a1, 662
+		jal drawLine
+	
+		li $a0, 724
+		li $a1, 727
+		jal drawLine
+	
+		li $a2, skin
+		li $a0,727
+		li $a1,728
+		jal drawLine
+	
+		li $a0, 788
+		li $a1, 789
+		jal drawLine
+	
+		li $a0, 790
+		li $a1, 791
+		jal drawLine
+	
 	j turtleEnd
 	
 	turtleAutumn:
@@ -58,6 +106,8 @@ printTurtle:
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
 	jr $ra
+
+
 #base map
 atlantic:
 	subi $sp, $sp, 4
@@ -359,6 +409,29 @@ turtleSp:
 	li $a1, 2893
 	jal drawLine
 	
+	#mini turtle
+	li $a2, shell
+	li $a0, 2632
+	li $a1, 2633
+	jal drawLine
+	
+	li $a0, 2695
+	li $a1, 2698
+	jal drawLine
+
+	li $a2, skin
+	li $a0, 2698
+	li $a1, 2699
+	jal drawLine
+	
+	li $a0, 2759
+	li $a1, 2760
+	jal drawLine
+	
+	li $a0, 2761
+	li $a1, 2762
+	jal drawLine
+	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
 	jr $ra
@@ -543,6 +616,29 @@ turtleF:
 	
 	li $a0, 911
 	li $a1, 920
+	jal drawLine
+	
+	#mini turtle
+	li $a2, shell
+	li $a0, 659
+	li $a1, 660
+	jal drawLine
+	
+	li $a0, 722
+	li $a1, 725
+	jal drawLine
+	
+	li $a2, skin
+	li $a0,725
+	li $a1,726
+	jal drawLine
+	
+	li $a0, 786
+	li $a1, 787
+	jal drawLine
+	
+	li $a0, 788
+	li $a1, 789
 	jal drawLine
 	
 	lw $ra, 0($sp)
