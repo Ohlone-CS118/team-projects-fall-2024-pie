@@ -44,6 +44,7 @@ printParrot:
 	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
+	
 	jr $ra
 
 australia:
@@ -286,16 +287,6 @@ australia:
 	li $a1, 4074
 	jal drawLine
 	
-	#lakes
-	li $a2, water
-	
-	li $a0, 1884
-	li $a1, 1888
-	jal drawLine
-	
-	li $a0, 1947
-	li $a1, 1952
-	jal drawLine
 	
 	li $a0, 2009
 	li $a1, 2017
@@ -313,33 +304,6 @@ australia:
 	li $a1, 2987
 	jal drawLine
 	
-	#water cutouts
-	li $a2, water
-	
-	li $a0, 1884
-	li $a1, 1888
-	jal drawLine
-	
-	li $a0, 1947
-	li $a1, 1952
-	jal drawLine
-	
-	li $a0, 2009
-	li $a1, 2017
-	jal drawLine
-	
-	li $a0, 2071
-	li $a1, 2082
-	jal drawLine
-	
-	li $a0, 3042
-	li $a1, 3049
-	jal drawLine
-	
-	li $a0, 3438
-	li $a1, 3439
-	jal drawLine
-
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
 	jr $ra
