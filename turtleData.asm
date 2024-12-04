@@ -38,7 +38,8 @@ printTurtle:
 	beq $s0, $t3, turtleAutumn
 	
 	turtleWinter:
-	jal turtleW
+	li $a2, winter
+	jal turtleSW
 	j turtleEnd
 	
 	turtleSpring:
@@ -46,7 +47,8 @@ printTurtle:
 	j turtleEnd
 	
 	turtleSummer:
-	jal turtleS
+	li $a2, summer
+	jal turtleSW
 	j turtleEnd
 	
 	turtleAutumn:
@@ -71,6 +73,207 @@ atlantic:
 	jal backgroundLoop
 	
 	#land elements
+	li $a2, land
+	
+	li $a0, 0
+	li $a1, 22
+	jal drawLine
+	
+	li $a0, 64
+	li $a1, 87
+	jal drawLine
+	
+	li $a0, 128
+	li $a1, 152
+	jal drawLine
+	
+	li $a0, 192
+	li $a1, 208
+	jal drawLine
+	
+	li $a0, 212
+	li $a1, 216
+	jal drawLine
+	
+	li $a0, 256
+	li $a1, 271
+	jal drawLine
+	
+	li $a0, 275
+	li $a1, 279
+	jal drawLine
+	
+	li $a0, 320
+	li $a1, 334
+	jal drawLine
+	
+	li $a0, 338
+	li $a1, 342
+	jal drawLine
+	
+	li $a0, 384
+	li $a1, 397
+	jal drawLine
+	
+	li $a0, 403
+	li $a1, 405
+	jal drawLine
+	
+	li $a0, 448
+	li $a1, 461
+	jal drawLine
+	
+	li $a0, 512
+	li $a1, 524
+	jal drawLine
+	
+	li $a0, 576
+	li $a1, 588
+	jal drawLine
+	
+	li $a0, 640
+	li $a1, 653
+	jal drawLine
+	
+	li $a0, 704
+	li $a1, 717
+	jal drawLine
+	
+	li $a0, 768
+	li $a1, 782
+	jal drawLine
+	
+	li $a0, 832
+	li $a1,846
+	jal drawLine
+	
+	li $a0, 896
+	li $a1, 909
+	jal drawLine
+	
+	li $a0, 960
+	li $a1, 973
+	jal drawLine
+	
+	li $a0, 1024
+	li $a1, 1036
+	jal drawLine
+	
+	li $a0, 1088
+	li $a1, 1099
+	jal drawLine
+	
+	li $a0, 1152
+	li $a1, 1163
+	jal drawLine
+	
+	li $a0, 1216
+	li $a1, 1227
+	jal drawLine
+	
+	li $a0, 1280
+	li $a1, 1291
+	jal drawLine
+	
+	li $a0, 1344
+	li $a1, 1355
+	jal drawLine
+	
+	li $a0, 1408
+	li $a1, 1419
+	jal drawLine
+	
+	li $a0, 1472
+	li $a1, 1482
+	jal drawLine
+	
+	li $a0, 1536
+	li $a1, 1545
+	jal drawLine
+	
+	li $a0, 1600
+	li $a1, 1608
+	jal drawLine
+	
+	li $a0, 1664
+	li $a1, 1671
+	jal drawLine
+	
+	li $a0, 1728
+	li $a1, 1734
+	jal drawLine
+	
+	li $a0, 1792
+	li $a1, 1798
+	jal drawLine
+	
+	li $a0, 1856
+	li $a1, 1861
+	jal drawLine
+	
+	li $a0, 1920
+	li $a1, 1924
+	jal drawLine
+	
+	li $a0, 1984
+	li $a1, 1988
+	jal drawLine
+	
+	li $a0, 2048
+	li $a1, 2050
+	jal drawLine
+	
+	li $a0, 2112
+	li $a1, 2113
+	jal drawLine
+	
+	li $a0, 2176
+	li $a1, 2177
+	jal drawLine
+	
+	li $a0, 2240
+	li $a1, 2241
+	jal drawLine
+	
+	li $a0, 2304
+	li $a1, 2305
+	jal drawLine
+	
+	li $a0, 2368
+	li $a1, 2369
+	jal drawLine
+	
+	li $a0, 2432
+	li $a1, 2434
+	jal drawLine
+	
+	li $a0, 2496
+	li $a1, 2498
+	jal drawLine
+	
+	li $a0, 2560
+	li $a1, 2563
+	jal drawLine
+	
+	li $a0, 2624
+	li $a1, 2627
+	jal drawLine
+	
+	li $a0, 2688
+	li $a1, 2691
+	jal drawLine
+	
+	li $a0, 2752
+	li $a1, 2756
+	jal drawLine
+	
+	li $a0, 2816
+	li $a1, 2820
+	jal drawLine
+	
+	li $a0, 2881
+	li $a1, 2884
+	jal drawLine
 	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
@@ -84,25 +287,192 @@ backgroundLoop:
 	jr $ra
 	
 #migration data
-turtleW:
-	subi $sp, $sp, 4
-	sw $ra, 0($sp)
-	
-	lw $ra, 0($sp)
-	addi $sp, $sp, 4	
-	jr $ra
 
 turtleSp:
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
 	
+	li $a2, spring
+	
+	li $a0, 2437
+	li $a1, 2445
+	jal drawLine
+	
+	li $a0, 2501
+	li $a1, 2509
+	jal drawLine
+	
+	li $a0, 2565
+	li $a1, 2573
+	jal drawLine
+	
+	li $a0, 2629
+	li $a1, 2637
+	jal drawLine
+	
+	li $a0, 2693
+	li $a1, 2701
+	jal drawLine
+	
+	li $a0, 2757
+	li $a1, 2765
+	jal drawLine
+	
+	li $a0, 2821
+	li $a1, 2829
+	jal drawLine
+	
+	li $a0, 2885
+	li $a1, 2893
+	jal drawLine
+	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
 	jr $ra
 
-turtleS:
+turtleSW:
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
+	
+	li $a0, 531
+	li $a1, 537
+	jal drawLine
+	
+	li $a0, 595
+	li $a1, 601
+	jal drawLine
+	
+	li $a0, 658
+	li $a1, 665
+	jal drawLine
+	
+	li $a0, 722
+	li $a1, 729
+	jal drawLine
+	
+	li $a0, 786
+	li $a1, 793
+	jal drawLine
+	
+	li $a0, 849
+	li $a1, 857
+	jal drawLine
+	
+	li $a0, 913
+	li $a1, 921
+	jal drawLine
+	
+	li $a0, 976
+	li $a1, 984
+	jal drawLine
+	
+	li $a0, 1040
+	li $a1, 1048
+	jal drawLine
+	
+	li $a0, 1103
+	li $a1, 1111
+	jal drawLine
+	
+	li $a0, 1167
+	li $a1, 1175
+	jal drawLine
+	
+	li $a0, 1231
+	li $a1, 1239
+	jal drawLine
+	
+	li $a0, 1295
+	li $a1, 1303
+	jal drawLine
+	
+	li $a0, 1359
+	li $a1, 1367
+	jal drawLine
+	
+	li $a0, 1423
+	li $a1, 1431
+	jal drawLine
+	
+	li $a0, 1486
+	li $a1, 1495
+	jal drawLine
+	
+	li $a0, 1549
+	li $a1, 1558
+	jal drawLine
+	
+	li $a0, 1612
+	li $a1, 1622
+	jal drawLine
+	
+	li $a0, 1675
+	li $a1, 1685
+	jal drawLine
+	
+	li $a0, 1738
+	li $a1, 1748
+	jal drawLine
+	
+	li $a0, 1801
+	li $a1, 1811
+	jal drawLine
+	
+	li $a0, 1864
+	li $a1, 1874
+	jal drawLine
+	
+	li $a0, 1927
+	li $a1, 1938
+	jal drawLine
+	
+	li $a0, 1991
+	li $a1, 2001
+	jal drawLine
+	
+	li $a0, 2055
+	li $a1, 2064
+	jal drawLine
+	
+	li $a0, 2118
+	li $a1, 2127
+	jal drawLine
+
+	li $a0, 2181
+	li $a1, 2190
+	jal drawLine
+	
+	li $a0, 2244
+	li $a1, 2253
+	jal drawLine
+	
+	li $a0, 2308
+	li $a1, 2317
+	jal drawLine
+	
+	li $a0, 2372
+	li $a1, 2380
+	jal drawLine
+	
+	li $a0, 2436
+	li $a1, 2444
+	jal drawLine
+	
+	li $a0, 2500
+	li $a1, 2508
+	jal drawLine
+	
+	li $a0, 2564
+	li $a1, 2572
+	jal drawLine
+	
+	li $a0, 2628
+	li $a1, 2636
+	jal drawLine
+	
+	li $a0, 2692
+	li $a1, 2700
+	jal drawLine
 	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
@@ -111,6 +481,36 @@ turtleS:
 turtleF:
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
+	
+	li $a2, fall
+	
+	li $a0, 527
+	li $a1, 536
+	jal drawLine
+	
+	li $a0, 591
+	li $a1, 600
+	jal drawLine
+	
+	li $a0, 655
+	li $a1, 664
+	jal drawLine
+	
+	li $a0, 719
+	li $a1, 728
+	jal drawLine
+
+	li $a0, 783
+	li $a1, 792
+	jal drawLine
+	
+	li $a0, 847
+	li $a1, 856
+	jal drawLine
+	
+	li $a0, 911
+	li $a1, 920
+	jal drawLine
 	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
