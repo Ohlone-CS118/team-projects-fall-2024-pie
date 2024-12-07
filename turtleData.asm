@@ -1,6 +1,6 @@
 #this file will hold base map and migration data, for turtle
 .data
-
+#seasonPrompt3:	.asciiz "Enter an integer from 1-4: "
 # set display to:
 #	Pixels width and height to 4x4
 #	Display width and height to 256x256
@@ -33,7 +33,27 @@ printTurtle:
 	sw $ra, 0($sp)
 
 	jal atlantic
+	
+	#li $v0, 4
+	#la $a0, seasonPrompt3 		# read integer from user
+	#syscall
+	#
+	#li $v0, 5		# read integer from user
+	#syscall
 
+	#move $s0, $v0		# store choice
+	
+	#li $t0, 1
+	#li $t1, 2
+	#li $t2, 3
+	#li $t3, 4
+	
+	li $t0, 1
+	li $t1, 2
+	li $t2, 3
+	li $t3, 4
+	
+	# at this point we need to re establish our t0-t3 registers because they are overriden in turtleData << atlantic subroutine
 	beq $s0, $t0, turtleWinter	# branch to proper season for parrot migration map
 	beq $s0, $t1, turtleSpring
 	beq $s0, $t2, turtleSummer
@@ -649,6 +669,8 @@ turtleF:
 
 #preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
+	subi $sp, $sp, 4
+	sw $ra, 0($sp)
     # Calculate the starting address of the row (DISPLAY + a0 * PIXEL_SIZE)
     li   $t0, DISPLAY        # Base address of the display
     mul  $t1, $a0, PIXEL_SIZE  # Starting pixel * PIXEL_SIZE (4 bytes per pixel)
@@ -665,4 +687,7 @@ forLoop:
     j    forLoop             	# Repeat the loop
 
 drawDone:
-	jr   $ra                  # Return from the function
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4	
+	jr $ra
+	#jr   $ra                  # Return from the function

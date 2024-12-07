@@ -1,6 +1,6 @@
 #this file will hold base map and migration data, for parrot
 .data
-
+	seasonPrompt2:	.asciiz "Enter an integer from 1-4: "
 # set display to:
 #	Pixels width and height to 4x4
 #	Display width and height to 256x256
@@ -31,19 +31,32 @@ printParrot:
 	sw $ra, 0($sp)
 
 	jal australia
+	
+	li $v0, 4
+	la $a0, seasonPrompt2 		# read integer from user
+	syscall
+	
+	li $v0, 5		# read integer from user
+	syscall
+
+	move $s0, $v0		# store choice
+	
+	li $t0, 1
+	li $t1, 2
+	li $t2, 3
+	li $t3, 4
+
 
 	beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
 	beq $s0, $t1, parrotSpring
 	beq $s0, $t2, parrotSummer
 	beq $s0, $t3, parrotAutumn
-	
-<<<<<<< HEAD
-	jal parrotSummer
-=======
+		#jal parrotSummer
+
 	parrotWinter:
 	jal parrotW
 	j parrotEnd
->>>>>>> 9761b51038c12901e3a6f4ba809331e41673bd5f
+
 	
 	parrotSpring:
 	li $a2, spring

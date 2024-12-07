@@ -69,10 +69,11 @@ loop:
 	# repeat if choice == 1
 	li $v0, 5
 	syscall
+	move $t0,$v0 
 	
-	li $t0, 1
-	beq $v0, $t0, mainMenu
-	beqz $v0, end
+	li $t1, 1
+	beq $t0, $t1, mainMenu	# repeat
+	beqz $t0, end		# exit if 0
 	
 	li $v0, 4			# error checking
 	la $a0, invalid_choice
@@ -91,9 +92,9 @@ animal1:
 
 	# read file based on animal option
 	# jal print caribou funfacts 
-	#move $s5, $a3
-	#jal soundsCaribou
-	#move $a3,$s5
+	move $s5, $a3
+	jal soundsCaribou
+	move $a3,$s5
 	jal Write2
 	# print txt file
 	#jal WriteTo3   
@@ -111,9 +112,9 @@ animal2:
 	# read file based on animal option
 	# jal print turtle fun facts
 	#jal factMain
-	#move $s5, $a3
-	#jal soundsParrot
-	#move $a3,$s5
+	move $s5, $a3
+	jal soundsTurtle
+	move $a3,$s5
 	jal Write2
 
 	# print txt file
@@ -132,6 +133,9 @@ animal3:
 	# read file based on animal option
 	# jal print parrot fun facts
 	#jal factMain
+	move $s5, $a3
+	jal soundsParrot
+	move $a3,$s5
 	jal Write2
 	# print txt file
 	#jal WriteTo3   
@@ -169,6 +173,7 @@ getSeason:
 	beq $a3, $t0, caribouMigration		# branch to proper animal's migration data
 	beq $a3, $t1, turtleMigration		
 	beq $a3, $t2, parrotMigration	
+	#j seasonEnd
 	
 # displays Caribou migration map based on season choice
 caribouMigration:
@@ -208,27 +213,36 @@ turtleMigration:
 	li $v0, 4			# error checking
 	la $a0, invalid_choice
 	syscall 
-	
 	j getSeason
+	
+	
 	turtleWinter:
+	jal printTurtle
 	# code to print Winter map for turtle
 	j seasonEnd
 	
 	turtleSpring:
+	
+	jal printTurtle
 	# code to print Spring map for turtle
 	j seasonEnd
 	
 	turtleSummer:
+	
+	jal printTurtle
 	# code to print Summer map for turtle
 	j seasonEnd
 	
 	turtleAutumn:
+	
+	jal printTurtle
 	# code to print Autumnn map for turtle
 	j seasonEnd
 # displays parrot migration map based on season choice
+
 parrotMigration:
 
-	#jal printParrot
+	jal printParrot
 	
 	#beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
 	#beq $s0, $t1, parrotSpring
@@ -254,6 +268,7 @@ parrotMigration:
 	
 	#parrotAutumn:
 	# code to print Autumnn map for parrot
+	
 seasonEnd:
 
 	lw $ra, 0($sp)
