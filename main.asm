@@ -1,11 +1,11 @@
 .data
+	display:	.space 16384
 	welcome:	.asciiz "Hello fellow Adventurer!\n"
 	message:	.asciiz "We are PIE, and this is our Endangered Animal Migration Game.\nYou are going to be able to pick between 3 endangered animals, and learn more about them.\nIf you know anything about any of the animals feel free to add some fun facts,\nand share your knowledge witht the rest of the world!\n"
 	choices:	.asciiz "\nPlease pick an animal.\n|-------------|---------------------------|---------------------------|\n| (1) Caribou | (2) Leatherback Sea Turle | (3) Orange Bellied Parrot |\n|-------------|---------------------------|---------------------------|"
 	prompt:		.asciiz "\nEnter an integer from 1-3: "
 	repeat:		.asciiz "\nPlease enter (1) to pick another animal or (0) to exit: "
 	seasonChoices:	.asciiz "\nPlease pick a season.\n|-----------|-----------|-----------|-----------|\n|(1) Winter |(2) Spring |(3) Summer |(4) Autumn |\n|-----------|-----------|-----------|-----------|\n"
-	seasonPrompt:	.asciiz "Enter an integer from 1-4: "
 	invalid_choice:	.asciiz "Please enter a valid number\n"
 
 .text
@@ -161,114 +161,20 @@ pickSeason:
 	la $a0, seasonChoices
 	syscall
 getSeason:
-	li $v0, 4		# prompt user to enter option for season
-	la $a0, seasonPrompt
-	syscall
-	
-	li $v0, 5		# read integer from user
-	syscall
-
-	move $s0, $v0		# store choice
 	
 	beq $a3, $t0, caribouMigration		# branch to proper animal's migration data
 	beq $a3, $t1, turtleMigration		
 	beq $a3, $t2, parrotMigration	
 	#j seasonEnd
 	
-# displays Caribou migration map based on season choice
 caribouMigration:
-	beq $s0, $t0, caribouWinter	# branch to proper season for caribou migration map
-	beq $s0, $t1, caribouSpring
-	beq $s0, $t2, caribouSummer
-	beq $s0, $t3, caribouAutumn
-	
-	li $v0, 4			# error checking
-	la $a0, invalid_choice
-	syscall 
-	
-	j getSeason
-	caribouWinter:
-	# code to print Winter map for caribou
+	jal printCaribou		# jal to print migration data for caribou
 	j seasonEnd
-	
-	caribouSpring:
-	# code to print Spring map for caribou
-	j seasonEnd
-	
-	caribouSummer:
-	# code to print Summer map for caribou
-	j seasonEnd
-	
-	caribouAutumn:
-	# code to print Autumnn map for caribou
-	j seasonEnd	
-
-# displays turtle migration map based on  season choice
 turtleMigration:
-	beq $s0, $t0, turtleWinter	# branch to proper season for turtle migration map
-	beq $s0, $t1, turtleSpring
-	beq $s0, $t2, turtleSummer
-	beq $s0, $t3, turtleAutumn
-	
-	li $v0, 4			# error checking
-	la $a0, invalid_choice
-	syscall 
-	j getSeason
-	
-	
-	turtleWinter:
-	jal printTurtle
-	# code to print Winter map for turtle
+	jal printTurtle		# jal to print migration data for turtle	
 	j seasonEnd
-	
-	turtleSpring:
-	
-	jal printTurtle
-	# code to print Spring map for turtle
-	j seasonEnd
-	
-	turtleSummer:
-	
-	jal printTurtle
-	# code to print Summer map for turtle
-	j seasonEnd
-	
-	turtleAutumn:
-	
-	jal printTurtle
-	# code to print Autumnn map for turtle
-	j seasonEnd
-# displays parrot migration map based on season choice
-
 parrotMigration:
-
-	jal printParrot
-	
-	#beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
-	#beq $s0, $t1, parrotSpring
-	#*beq $s0, $t2, parrotSummer
-	#beq $s0, $t3, parrotAutumn
-	
-	#li $v0, 4			# error checking
-	#la $a0, invalid_choice
-	#syscall 
-	
-	#j getSeason
-	#parrotWinter:
-	# code to print Winter map for parrot
-	#j seasonEnd
-	
-	#parrotSpring:
-	# code to print Spring map for parrot
-	#j seasonEnd
-	
-	#parrotSummer:
-	# code to print Summer map for parrot
-	#j seasonEnd
-	
-	#parrotAutumn:
-	# code to print Autumnn map for parrot
-	
+	jal printParrot		# jal to print migration data for parrot
 seasonEnd:
 
 	lw $ra, 0($sp)

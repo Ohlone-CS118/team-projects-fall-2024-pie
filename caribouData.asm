@@ -1,13 +1,12 @@
 #this file will hold base map and migration data, for caribou
 .data
-
+seasonPrompt:	.asciiz "Enter an integer from 1-4: "
 # set display to:
 #	Pixels width and height to 4x4
 #	Display width and height to 256x256
 #	Base address = 0x10010000
 # This will make our screen width 64x64 (256/4 = 64)
 #	64 * 64 * 4 = 16384
-display:	.space 16384
 	
 define:
 # screen information
@@ -31,6 +30,15 @@ printCaribou:
 	sw $ra, 0($sp)
 
 	jal alaska
+	
+	li $v0, 4
+	la $a0, seasonPrompt 		# read integer from user
+	syscall
+	#
+	li $v0, 5		# read integer from user
+	syscall
+
+	move $s0, $v0		# store choice
 
 	beq $s0, $t0, caribouWinter	# branch to proper season for parrot migration map
 	beq $s0, $t1, caribouSpring
