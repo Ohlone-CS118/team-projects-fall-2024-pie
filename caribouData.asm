@@ -1,12 +1,6 @@
 #this file will hold base map and migration data, for caribou
 .data
 seasonPrompt:	.asciiz "Enter an integer from 1-4: "
-# set display to:
-#	Pixels width and height to 4x4
-#	Display width and height to 256x256
-#	Base address = 0x10010000
-# This will make our screen width 64x64 (256/4 = 64)
-#	64 * 64 * 4 = 16384
 	
 define:
 # screen information
@@ -16,31 +10,42 @@ define:
 	.eqv DISPLAY 0x10010000
 #store all colors here so we can just call on them
 # colors
+	#base map colors
 	.eqv	water	0x00588dbe
 	.eqv	land	0x00fef3c0
+	#migration colors
 	.eqv	winter	0x00943989
 	.eqv	spring	0x00e6948f
 	.eqv	summer	0x0094241a
 	.eqv	fall	0x00e68d3e
+	#mini caribou colors
+	.eqv	coat	0x00423934
+	.eqv	antler	0x00915237
+		#caribou chest color is same as land
 .text
 .globl printCaribou
 
 printCaribou:
-	subi $sp, $sp, 4
+	subi $sp, $sp, 4		#create stack to save return adresses so they don't get overwritten with the jal's
 	sw $ra, 0($sp)
 
-	jal alaska
+	jal alaska			#call function for base map
 	
 	li $v0, 4
 	la $a0, seasonPrompt 		# read integer from user
 	syscall
-	#
-	li $v0, 5		# read integer from user
+	
+	li $v0, 5			# read integer from user
 	syscall
 
-	move $s0, $v0		# store choice
+	move $s0, $v0			# store choice
+	
+	li $t0, 1
+	li $t1, 2
+	li $t2, 3
+	li $t3, 4
 
-	beq $s0, $t0, caribouWinter	# branch to proper season for parrot migration map
+	beq $s0, $t0, caribouWinter	# branch to proper season for caribou migration map
 	beq $s0, $t1, caribouSpring
 	beq $s0, $t2, caribouSummer
 	beq $s0, $t3, caribouAutumn
@@ -71,17 +76,19 @@ alaska:
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
 	
-	li $a2, land #store color for bakground
+	li $a2, land 		#store color for bakground
 	li $s1, DISPLAY
-		#set s2 = last memory address of the display
-	li $s2, WIDTH
+	
+	li $s2, WIDTH		#set s2 = last memory address of the display
 	mul $s2, $s2, HEIGHT
 	mul $s2, $s2, 4		#word
 	add $s2, $s1, $s2
 	jal backgroundLoop
-	#alaska water cutouts
-	li $a2, water
 	
+	#alaska water cutouts
+	li $a2, water		#set color for water
+	
+	#a0 holds start pixel, a1 holds end pixel
 	li $a0, 0
 	li $a1, 15
 	jal drawLine
@@ -326,15 +333,14 @@ alaska:
 	addi $sp, $sp, 4
 		
 	jr $ra
-	
+#draw background in one color, copied from in class lab
 backgroundLoop:
-	
 	sw $a2, 0($s1)
 	addiu $s1, $s1, 4
 	ble $s1, $s2, backgroundLoop
 	jr $ra
 
-#migration data
+#all migration data
 caribouWS: #migration data for winter and summer
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)

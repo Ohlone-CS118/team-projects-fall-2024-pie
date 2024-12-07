@@ -16,12 +16,19 @@ define:
 	.eqv DISPLAY 0x10010000
 #store all colors here so we can just call on them
 # colors
+	#map colors
 	.eqv	water	0x00588dbe
 	.eqv	land	0x00fef3c0
+	#migration colors
 	.eqv	winter	0x00943989
 	.eqv	spring	0x00e6948f
 	.eqv	summer	0x0094241a
 	.eqv	fall	0x00e68d3e
+	#mini parrot colors
+	.eqv	beak	0x00000000
+	.eqv	body	0x009cdb43
+	.eqv	wing	0x0024523b
+	.eqv	head	0x00249fde
 .text
 .globl printParrot
 
@@ -44,7 +51,6 @@ printParrot:
 	li $t1, 2
 	li $t2, 3
 	li $t3, 4
-
 
 	beq $s0, $t0, parrotWinter	# branch to proper season for parrot migration map
 	beq $s0, $t1, parrotSpring

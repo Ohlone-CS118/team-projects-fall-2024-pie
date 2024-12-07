@@ -16,12 +16,15 @@ define:
 	.eqv DISPLAY 0x10010000
 #store all colors here so we can just call on them
 # colors
+	#map colors
 	.eqv	water	0x00588dbe
 	.eqv	land	0x00fef3c0
+	#migration colors
 	.eqv	winter	0x00943989
 	.eqv	spring	0x00e6948f
 	.eqv	summer	0x0094241a
 	.eqv	fall	0x00e68d3e
+	#mini turtle colors
 	.eqv	shell	0x008b93af
 	.eqv	skin	0x00143464
 .text
@@ -31,21 +34,16 @@ printTurtle:
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
 
-	jal atlantic
+	jal atlantic			# call function for base map
 	
 	li $v0, 4
 	la $a0, seasonPrompt		# read integer from user
 	syscall
-	#
-	li $v0, 5		# read integer from user
+	
+	li $v0, 5			# read integer from user
 	syscall
 
-	move $s0, $v0		# store choice
-	
-	#li $t0, 1
-	#li $t1, 2
-	#li $t2, 3
-	#li $t3, 4
+	move $s0, $v0			# store choice
 	
 	li $t0, 1
 	li $t1, 2
