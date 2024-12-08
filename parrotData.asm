@@ -33,7 +33,7 @@ printParrot:
 	jal australia
 	
 	li $v0, 4
-	la $a0, seasonPrompt 		# read integer from user
+	la $a0, seasonPrompt 	# read integer from user
 	syscall
 	
 	li $v0, 5		# read integer from user
@@ -54,11 +54,48 @@ printParrot:
 	parrotWinter:
 	jal parrotW
 	j parrotEnd
-
 	
 	parrotSpring:
 	li $a2, spring
 	jal parrotSF
+		#mini parrot
+		li $a2, body
+	
+		li $a0, 3426
+		li $a1, 3427
+		jal drawLine
+	
+		li $a0, 3491
+		li $a1, 3492
+		jal drawLine
+	
+		li $a0, 3553
+		li $a1, 3555
+		jal drawLine
+	
+		li $a2, head
+		li $a0, 3427
+		li $a1, 3428
+		jal drawLine
+	
+		li $a2, wing
+		li $a0, 3489
+		li $a1, 3491
+		jal drawLine
+	
+		li $a2, beak
+		li $a0, 3492
+		li $a1, 3493
+		jal drawLine
+	
+		li $a0, 3618
+		li $a1, 3619
+		jal drawLine
+	
+		li $a2, belly
+		li $a0, 3555
+		li $a1, 3556
+		jal drawLine
 	j parrotEnd
 	
 	parrotSummer:
@@ -68,12 +105,51 @@ printParrot:
 	parrotAutumn:
 	li $a2, fall
 	jal parrotSF
+		#mini parrot
+		li $a2, body
+
+		li $a0, 2131
+		li $a1, 2132
+		jal drawLine
+	
+		li $a0, 2196
+		li $a1, 2197
+		jal drawLine
+	
+		li $a0, 2258
+		li $a1, 2260
+		jal drawLine
+	
+		li $a2, head
+		li $a0, 2132
+		li $a1, 2133
+		jal drawLine
+	
+		li $a2, wing
+		li $a0, 2194
+		li $a1, 2196
+		jal drawLine
+	
+		li $a2, beak
+		li $a0, 2197
+		li $a1, 2198
+		jal drawLine
+	
+		li $a0, 2323
+		li $a1, 2324
+		jal drawLine
+	
+		li $a2, belly
+		li $a0, 2260
+		li $a1, 2261
+		jal drawLine
 
 	parrotEnd:
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
 	jr $ra
-
+	
+#base map function
 australia:
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
@@ -317,7 +393,7 @@ australia:
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4	
 	jr $ra
-	
+#copied from in class lab
 backgroundLoop:
 	
 	sw $a2, 0($s1)
@@ -637,6 +713,45 @@ parrotW: #data for winter
 	li $a1, 1943
 	jal drawLine
 	
+	#mini parrot
+	li $a2, body
+	
+	li $a0, 1620
+	li $a1, 1621
+	jal drawLine
+	
+	li $a0, 1685
+	li $a1, 1686
+	jal drawLine
+	
+	li $a0, 1747
+	li $a1, 1749
+	jal drawLine
+	
+	li $a2, head
+	li $a0, 1621
+	li $a1, 1622
+	jal drawLine
+	
+	li $a2, wing
+	li $a0, 1683
+	li $a1, 1685
+	jal drawLine
+	
+	li $a2, beak
+	li $a0, 1686
+	li $a1, 1687
+	jal drawLine
+	
+	li $a0, 1812
+	li $a1, 1813
+	jal drawLine
+	
+	li $a2, belly
+	li $a0, 1749
+	li $a1, 1750
+	jal drawLine
+	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
 	jr $ra
@@ -688,7 +803,7 @@ parrotS: #data for summer
 	li $a1, 3942
 	jal drawLine
 	
-	li $a3, beak
+	li $a2, beak
 	li $a0, 3943
 	li $a1, 3944
 	jal drawLine
@@ -707,7 +822,6 @@ parrotS: #data for summer
 	jr $ra	
 
 #drawing loops	
-
 #preconditions: a0:start pix, a1:end pix, $a2: color
 drawLine:
     # Calculate the starting address of the row (DISPLAY + a0 * PIXEL_SIZE)
