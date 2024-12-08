@@ -8,7 +8,6 @@ define:
 	.eqv WIDTH 64
 	.eqv HEIGHT 64
 	.eqv DISPLAY 0x10010000
-#store all colors here so we can just call on them
 # colors
 	#base map colors
 	.eqv	water	0x00588dbe
@@ -53,6 +52,43 @@ printCaribou:
 	caribouWinter:
 	li $a2, winter
 	jal caribouWS
+		#mini caribou
+		li $a2, antler
+	
+		li $a0, 855
+		li $a1, 856
+		jal drawLine
+	
+		li $a0, 857
+		li $a1, 858
+		jal drawLine
+	
+		li $a2, coat
+	
+		li $a0, 920
+		li $a1, 921
+		jal drawLine
+	
+		li $a0, 983
+		li $a1, 985
+		jal drawLine
+	
+		li $a0, 1049
+		li $a1, 1051
+		jal drawLine
+	
+		li $a0, 1112
+		li $a1, 1113
+		jal drawLine
+	
+		li $a0, 1114
+		li, $a1, 1115
+		jal drawLine
+	
+		li $a2, land
+		li $a0,	1048
+		li $a1, 1049
+		jal drawLine
 	j caribouEnd
 	
 	caribouSpring:
@@ -62,6 +98,43 @@ printCaribou:
 	caribouSummer:
 	li $a2, summer
 	jal caribouWS
+		#mini caribou
+		li $a2, antler
+	
+		li $a0, 3031
+		li $a1, 3032
+		jal drawLine
+	
+		li $a0, 3033
+		li $a1, 3034
+		jal drawLine
+	
+		li $a2, coat
+	
+		li $a0, 3096
+		li $a1, 3097
+		jal drawLine
+	
+		li $a0, 3159
+		li $a1, 3161
+		jal drawLine
+	
+		li $a0, 3225
+		li $a1, 3227
+		jal drawLine
+	
+		li $a0, 3288
+		li $a1, 3289
+		jal drawLine
+	
+		li $a0, 3290
+		li, $a1, 3291
+		jal drawLine
+	
+		li $a2, land
+		li $a0,	3224
+		li $a1, 3225
+		jal drawLine
 	j caribouEnd
 	
 	caribouAutumn:
@@ -556,9 +629,49 @@ caribouS: #data for spring
 	li $a1, 734
 	jal drawLine
 	
+	#mini caribou
+	li $a2, antler
+	
+	li $a0, 343
+	li $a1, 344
+	jal drawLine
+	
+	li $a0, 345
+	li $a1, 346
+	jal drawLine
+	
+	li $a2, coat
+	
+	li $a0, 408
+	li $a1, 409
+	jal drawLine
+	
+	li $a0, 471
+	li $a1, 473
+	jal drawLine
+	
+	li $a0, 537
+	li $a1, 539
+	jal drawLine
+	
+	li $a0, 600
+	li $a1, 601
+	jal drawLine
+	
+	li $a0, 602
+	li, $a1, 603
+	jal drawLine
+	
+	li $a2, land
+	li $a0,	535
+	li $a1, 536
+	jal drawLine
+	
+	
 	lw $ra, 0($sp)
 	addi $sp, $sp, 4
 	jr $ra	
+
 caribouF: #data for fall
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
@@ -623,6 +736,44 @@ caribouF: #data for fall
 	
 	li $a0, 3928
 	li $a1, 3944
+	jal drawLine
+	
+	#mini caribou
+	li $a2, antler
+	
+	li $a0, 3031
+	li $a1, 3032
+	jal drawLine
+	
+	li $a0, 3033
+	li $a1, 3034
+	jal drawLine
+	
+	li $a2, coat
+	
+	li $a0, 3096
+	li $a1, 3097
+	jal drawLine
+	
+	li $a0, 3159
+	li $a1, 3161
+	jal drawLine
+	
+	li $a0, 3225
+	li $a1, 3227
+	jal drawLine
+	
+	li $a0, 3288
+	li $a1, 3289
+	jal drawLine
+	
+	li $a0, 3290
+	li, $a1, 3291
+	jal drawLine
+	
+	li $a2, land
+	li $a0,	3224
+	li $a1, 3225
 	jal drawLine
 	
 	lw $ra, 0($sp)
