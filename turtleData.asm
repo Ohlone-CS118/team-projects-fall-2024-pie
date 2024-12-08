@@ -1,12 +1,6 @@
 #this file will hold base map and migration data, for turtle
 .data
 seasonPrompt:	.asciiz "Enter an integer from 1-4: "
-# set display to:
-#	Pixels width and height to 4x4
-#	Display width and height to 256x256
-#	Base address = 0x10010000
-# This will make our screen width 64x64 (256/4 = 64)
-#	64 * 64 * 4 = 16384
 	
 define:
 # screen information
@@ -14,7 +8,6 @@ define:
 	.eqv WIDTH 64
 	.eqv HEIGHT 64
 	.eqv DISPLAY 0x10010000
-#store all colors here so we can just call on them
 # colors
 	#map colors
 	.eqv	water	0x00588dbe
@@ -130,10 +123,10 @@ atlantic:
 	subi $sp, $sp, 4
 	sw $ra, 0($sp)
 	
-	li $a2, water #store color for bakground
+	li $a2, water 		#store color for bakground
 	li $s1, DISPLAY
-		#set s2 = last memory address of the display
-	li $s2, WIDTH
+
+	li $s2, WIDTH		#set s2 = last memory address of the display
 	mul $s2, $s2, HEIGHT
 	mul $s2, $s2, 4		#word
 	add $s2, $s1, $s2
@@ -379,6 +372,7 @@ atlantic:
 	addi $sp, $sp, 4	
 	jr $ra
 	
+#copied from in class lab
 backgroundLoop:
 	
 	sw $a2, 0($s1)
