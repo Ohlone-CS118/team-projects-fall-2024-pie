@@ -1,12 +1,6 @@
 #this file will hold base map and migration data, for parrot
 .data
 	seasonPrompt:	.asciiz "Enter an integer from 1-4: "
-# set display to:
-#	Pixels width and height to 4x4
-#	Display width and height to 256x256
-#	Base address = 0x10010000
-# This will make our screen width 64x64 (256/4 = 64)
-#	64 * 64 * 4 = 16384
 	
 define:
 # screen information
@@ -14,7 +8,6 @@ define:
 	.eqv WIDTH 64
 	.eqv HEIGHT 64
 	.eqv DISPLAY 0x10010000
-#store all colors here so we can just call on them
 # colors
 	#map colors
 	.eqv	water	0x00588dbe
@@ -29,6 +22,7 @@ define:
 	.eqv	body	0x009cdb43
 	.eqv	wing	0x0024523b
 	.eqv	head	0x00249fde
+	.eqv	belly	0x00fa6a0a
 .text
 .globl printParrot
 
@@ -56,7 +50,6 @@ printParrot:
 	beq $s0, $t1, parrotSpring
 	beq $s0, $t2, parrotSummer
 	beq $s0, $t3, parrotAutumn
-		#jal parrotSummer
 
 	parrotWinter:
 	jal parrotW
@@ -668,6 +661,45 @@ parrotS: #data for summer
 	
 	li $a0, 4067 
 	li $a1, 4073
+	jal drawLine
+	
+	#mini parrot
+	li $a2, body
+	
+	li $a0, 3877
+	li $a1, 3878
+	jal drawLine
+	
+	li $a0, 3942
+	li $a1, 3943
+	jal drawLine
+	
+	li $a0, 4004
+	li $a1, 4006
+	jal drawLine
+	
+	li $a2, head
+	li $a0, 3878
+	li $a1, 3879
+	jal drawLine
+	
+	li $a2, wing
+	li $a0, 3940
+	li $a1, 3942
+	jal drawLine
+	
+	li $a3, beak
+	li $a0, 3943
+	li $a1, 3944
+	jal drawLine
+	
+	li $a0, 4069
+	li $a1, 4070
+	jal drawLine
+	
+	li $a2, belly
+	li $a0, 4006
+	li $a1, 4007
 	jal drawLine
 	
 	lw $ra, 0($sp)
